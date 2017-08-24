@@ -1,3 +1,6 @@
+/usr/bin/guacenc
 /usr/sbin/guacd
+/usr/share/man/man1/guacenc.1
+/usr/share/man/man5/guacd.conf.5
 /usr/share/man/man8/guacd.8
 debian/guacd.service /lib/systemd/system/

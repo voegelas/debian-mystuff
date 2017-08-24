@@ -1,3 +1,10 @@
+guacamole-client (0.9.13-1) unstable; urgency=medium
+
+  * Updated for version 0.9.13.
+  * Remove the deprecated noauth extension.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Wed, 23 Aug 2017 11:44:13 +0200
+
 guacamole-client (0.9.9+dfsg-1) unstable; urgency=medium
 
   [ Dominik George ]

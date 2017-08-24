@@ -1,0 +1,2 @@
+debian/etc/guacamole/* /etc/guacamole/
+debian/etc/pam.d/* /etc/pam.d/

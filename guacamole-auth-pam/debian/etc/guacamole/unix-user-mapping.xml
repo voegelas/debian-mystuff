@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unix-user-mapping serviceName="guacamole">
+    <!--
+    <config name="RDP Connection" protocol="rdp">
+        <param name="hostname" value="localhost" />
+        <param name="username" value="${GUAC_USERNAME}" />
+        <param name="password" value="${GUAC_PASSWORD}" />
+    </config>
+    -->
+
+    <!--
+    <config name="VNC Connection" protocol="vnc">
+        <param name="hostname" value="localhost" />
+        <param name="port" value="5901" />
+        <param name="password" value="VNCPASS" />
+    </config>
+    -->
+
+    <!--
+    <user name="USERNAME">
+        <config-ref name="RDP Connection" />
+        <config-ref name="VNC Connection" />
+    </user>
+    -->
+
+    <!--
+    <group name="GROUPNAME">
+        <config-ref name="RDP Connection" />
+    </group>
+    -->
+</unix-user-mapping>

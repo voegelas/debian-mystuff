@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Exit on errors
+set -e
+
+GUAC_GROUP="guacamole-web"
+CONFIG_FILE="/etc/guacamole/unix-user-mapping.xml"
+
+if [ -f "$CONFIG_FILE" ] && getent group "$GUAC_GROUP" >/dev/null
+then
+    chmod 640 "$CONFIG_FILE"
+    chgrp "$GUAC_GROUP" "$CONFIG_FILE"
+fi
+
+exit 0

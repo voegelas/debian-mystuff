@@ -12,7 +12,7 @@ set -e
 . /usr/share/debconf/confmodule
 
 GUAC_GROUP="guacamole-web"
-GUAC_FILES="/etc/guacamole/user-mapping.xml"
+GUAC_FILES="/etc/guacamole/guacamole.properties /etc/guacamole/user-mapping.xml"
 GUAC_FILE_OWNERSHIP="root:$GUAC_GROUP"
 GUAC_FILE_MOD="640"
 SC_USER="tomcat8"

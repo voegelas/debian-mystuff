@@ -1,3 +1,9 @@
+guacamole-server (0.9.13-1) unstable; urgency=medium
+
+  * Updated for version 0.9.13.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Wed, 23 Aug 2017 11:14:57 +0200
+
 guacamole-server (0.9.9-2) unstable; urgency=medium
 
   * Fix GPL-2+ short name in d/copyright. (Closes: #849686)

@@ -10,7 +10,7 @@
 Template: guacamole-tomcat/restart-server
 Type: boolean
 Default: false
-_Description: Restart Tomcat server?
+Description: Restart Tomcat server?
  The installation of Guacamole under Tomcat requires restarting the Tomcat
  server, as Tomcat will only read configuration files on startup.
  .

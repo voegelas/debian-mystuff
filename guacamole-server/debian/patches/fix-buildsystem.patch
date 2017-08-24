@@ -6,18 +6,19 @@ Description: Build system fixes
  5. Fix LDFLAGS vs. LDADD to allow -Wl,--as-needed.
  6. Clean up linking of shared libraries.
 Author: Dominik George <nik@naturalnet.de>
---- a/configure.ac
-+++ b/configure.ac
-@@ -22,7 +22,7 @@
+diff -ur a/configure.ac b/configure.ac
+--- a/configure.ac	2017-07-08 21:50:19.000000000 +0200
++++ b/configure.ac	2017-08-23 15:09:43.465634392 +0200
+@@ -19,7 +19,7 @@
  
  AC_PREREQ([2.61])
- AC_INIT([guacamole-server], [0.9.9])
+ AC_INIT([guacamole-server], [0.9.13-incubating])
 -AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects])
 +AM_INIT_AUTOMAKE([-Wall foreign subdir-objects])
  AM_SILENT_RULES([yes])
  
  LT_PREREQ([2.2])
-@@ -66,6 +66,11 @@ AC_CHECK_LIB([pthread], [pthread_create]
+@@ -63,6 +63,11 @@
                AC_DEFINE([HAVE_LIBPTHREAD],,
                          [Whether libpthread was found])])
  
@@ -29,16 +30,7 @@ Author: Dominik George <nik@naturalnet.de>
  # OSSP UUID
  AC_CHECK_LIB([ossp-uuid], [uuid_make], [UUID_LIBS=-lossp-uuid],
               AC_CHECK_LIB([uuid], [uuid_make], [UUID_LIBS=-luuid],
-@@ -163,7 +168,7 @@ then
-     have_ssl=yes
- 
-     AC_CHECK_HEADER(openssl/ssl.h,, [have_ssl=no])
--    AC_CHECK_LIB([ssl], [SSL_CTX_new], [SSL_LIBS="$SSL_LIBS -lssl"], [have_ssl=no])
-+    AC_CHECK_LIB([ssl], [SSL_CTX_new], [SSL_LIBS="$SSL_LIBS -lssl -lcrypto"], [have_ssl=no])
- 
-     if test "x${have_ssl}" = "xno"
-     then
-@@ -390,9 +395,9 @@ then
+@@ -497,9 +502,9 @@
  
      # libfreerdp-core / libfreerdp
      AC_CHECK_LIB([freerdp-core], [freerdp_new],
@@ -50,13 +42,13 @@ Author: Dominik George <nik@naturalnet.de>
                                 [AC_MSG_WARN([
    --------------------------------------------
     Unable to find libfreerdp-core / libfreerdp
-@@ -867,13 +872,14 @@ then
+@@ -1036,13 +1041,14 @@
      AC_CHECK_LIB([ssh2], [gcry_control],
                           [AC_CHECK_HEADER(gcrypt.h,
                                            [AC_DEFINE([LIBSSH2_USES_GCRYPT],,
 -                                                     [Whether libssh2 was built against libgcrypt])],
 +                                                     [Whether libssh2 was built against libgcrypt])
-+			                  SSH_LIBS="$SSH_LIBS -lgcrypt"],
++                                           SSH_LIBS="$SSH_LIBS -lgcrypt"],
                                            [AC_MSG_WARN([
    --------------------------------------------
     libssh2 appears to be built against libgcrypt, but the libgcrypt headers
@@ -67,10 +59,23 @@ Author: Dominik George <nik@naturalnet.de>
  
  fi
  
---- a/src/common-ssh/Makefile.am
-+++ b/src/common-ssh/Makefile.am
-@@ -40,15 +40,13 @@ noinst_HEADERS =      \
-     guac_ssh_user.h
+diff -ur a/src/common/Makefile.am b/src/common/Makefile.am
+--- a/src/common/Makefile.am	2017-04-04 06:08:12.000000000 +0200
++++ b/src/common/Makefile.am	2017-08-23 13:44:32.755154789 +0200
+@@ -57,7 +57,7 @@
+     surface.c
+ 
+ libguac_common_la_CFLAGS =  \
+-    -Werror -Wall -pedantic \
++    -Wall                   \
+     @LIBGUAC_INCLUDE@
+ 
+ libguac_common_la_LIBADD = \
+diff -ur a/src/common-ssh/Makefile.am b/src/common-ssh/Makefile.am
+--- a/src/common-ssh/Makefile.am	2017-06-11 04:00:16.000000000 +0200
++++ b/src/common-ssh/Makefile.am	2017-08-23 13:45:01.155409961 +0200
+@@ -41,14 +41,12 @@
+     common-ssh/user.h
  
  libguac_common_ssh_la_CFLAGS = \
 -    -Werror -Wall -pedantic    \
@@ -82,81 +87,88 @@ Author: Dominik George <nik@naturalnet.de>
 -    @LIBGUAC_LTLIB@
 -
 -libguac_common_ssh_la_LDFLAGS = \
--    @PTHREAD_LIBS@              \
--    @SSH_LIBS@                  \
-+    @LIBGUAC_LTLIB@            \
-+    @PTHREAD_LIBS@             \
-+    @SSH_LIBS@                 \
++    @LIBGUAC_LTLIB@             \
+     @PTHREAD_LIBS@              \
+     @SSH_LIBS@                  \
      @SSL_LIBS@
- 
---- a/src/common/Makefile.am
-+++ b/src/common/Makefile.am
-@@ -50,7 +50,7 @@ libguac_common_la_SOURCES = \
-     guac_surface.c
- 
- libguac_common_la_CFLAGS =  \
--    -Werror -Wall -pedantic \
-+    -Wall                   \
-     @LIBGUAC_INCLUDE@
- 
- libguac_common_la_LIBADD = \
---- a/src/guacd/Makefile.am
-+++ b/src/guacd/Makefile.am
-@@ -46,16 +46,14 @@ guacd_SOURCES =   \
-     log.c
+diff -ur a/src/guacd/Makefile.am b/src/guacd/Makefile.am
+--- a/src/guacd/Makefile.am	2017-07-08 21:50:19.000000000 +0200
++++ b/src/guacd/Makefile.am	2017-08-23 13:45:21.067588829 +0200
+@@ -47,7 +47,7 @@
+     proc-map.c
  
  guacd_CFLAGS =              \
 -    -Werror -Wall -pedantic \
-+     -Wall  \
++    -Wall                   \
      @COMMON_INCLUDE@        \
+     @LIBGUACD_INCLUDE@      \
      @LIBGUAC_INCLUDE@
- 
--guacd_LDADD =       \
-+guacd_LDADD =      \
-     @COMMON_LTLIB@  \
+@@ -55,10 +55,8 @@
+ guacd_LDADD =        \
+     @COMMON_LTLIB@   \
+     @LIBGUACD_LTLIB@ \
 -    @LIBGUAC_LTLIB@
 -
 -guacd_LDFLAGS =    \
 -    @PTHREAD_LIBS@ \
-+    @LIBGUAC_LTLIB@ \
-+    @PTHREAD_LIBS@  \
++    @LIBGUAC_LTLIB@  \
++    @PTHREAD_LIBS@   \
      @SSL_LIBS@
  
  EXTRA_DIST =         \
---- a/src/libguac/Makefile.am
-+++ b/src/libguac/Makefile.am
-@@ -97,17 +97,17 @@ endif
+diff -ur a/src/libguac/Makefile.am b/src/libguac/Makefile.am
+--- a/src/libguac/Makefile.am	2017-07-08 21:50:19.000000000 +0200
++++ b/src/libguac/Makefile.am	2017-08-23 14:00:47.187874261 +0200
+@@ -101,10 +101,13 @@
  
  
  libguac_la_CFLAGS = \
 -    -Werror -Wall -pedantic -Iguacamole
-+     -Wall  -Iguacamole
++    -Wall -Iguacamole
  
--libguac_la_LDFLAGS =     \
--    -version-info 11:0:0 \
--    @CAIRO_LIBS@         \
--    @JPEG_LIBS@          \
--    @PNG_LIBS@           \
--    @PTHREAD_LIBS@       \
--    @UUID_LIBS@          \
--    @VORBIS_LIBS@        \
--    @WEBP_LIBS@
-+libguac_la_LDFLAGS = \
-+    -version-info 11:0:0
- 
- libguac_la_LIBADD = \
+ libguac_la_LDFLAGS =     \
+-    -version-info 14:0:2 \
++    -version-info 14:0:2
++
++libguac_la_LIBADD = \
++    @LIBADD_DLOPEN@      \
+     @CAIRO_LIBS@         \
+     @JPEG_LIBS@          \
+     @PNG_LIBS@           \
+@@ -112,6 +115,3 @@
+     @UUID_LIBS@          \
+     @VORBIS_LIBS@        \
+     @WEBP_LIBS@
+-
+-libguac_la_LIBADD = \
 -    @LIBADD_DLOPEN@ 
-+    @LIBADD_DLOPEN@ \
-+    @CAIRO_LIBS@    \
-+    @JPEG_LIBS@     \
-+    @PNG_LIBS@      \
-+    @PTHREAD_LIBS@  \
-+    @UUID_LIBS@     \
-+    @VORBIS_LIBS@   \
-+    @WEBP_LIBS@
---- a/src/protocols/rdp/Makefile.am
-+++ b/src/protocols/rdp/Makefile.am
-@@ -117,77 +117,80 @@ endif
+diff -ur a/src/libguacd/Makefile.am b/src/libguacd/Makefile.am
+--- a/src/libguacd/Makefile.am	2017-07-08 21:50:19.000000000 +0200
++++ b/src/libguacd/Makefile.am	2017-08-23 13:45:35.499718449 +0200
+@@ -30,16 +30,14 @@
+     user.c
+ 
+ libguacd_la_CFLAGS =        \
+-    -Werror -Wall -pedantic \
++    -Wall                   \
+     @COMMON_INCLUDE@        \
+     @LIBGUAC_INCLUDE@
+ 
+ libguacd_la_LIBADD = \
+     @COMMON_LTLIB@   \
+-    @LIBGUAC_LTLIB@
+-
+-libguacd_la_LDFLAGS = \
+-    @PTHREAD_LIBS@    \
++    @LIBGUAC_LTLIB@  \
++    @PTHREAD_LIBS@   \
+     @SSL_LIBS@
+ 
+ # SSL support
+diff -ur a/src/protocols/rdp/Makefile.am b/src/protocols/rdp/Makefile.am
+--- a/src/protocols/rdp/Makefile.am	2017-06-11 04:00:16.000000000 +0200
++++ b/src/protocols/rdp/Makefile.am	2017-08-23 13:46:03.383968840 +0200
+@@ -138,96 +138,100 @@
  #
  
  libguac_client_rdp_la_CFLAGS = \
@@ -178,7 +190,7 @@ Author: Dominik George <nik@naturalnet.de>
 -    @LIBGUAC_LTLIB@
 +libguac_client_rdp_la_LIBADD = \
 +    @COMMON_LTLIB@             \
-+    @LIBGUAC_LTLIB@            \
++    @LIBGUAC_LTLIB@            \   
 +    @CAIRO_LIBS@               \
 +    @PTHREAD_LIBS@             \
 +    @RDP_LIBS@
@@ -201,6 +213,31 @@ Author: Dominik George <nik@naturalnet.de>
 +    -module -avoid-version -shared
  
  guacdr_libadd =     \
+     @COMMON_LTLIB@  \
+-    @LIBGUAC_LTLIB@
++    @LIBGUAC_LTLIB@ \
++    @PTHREAD_LIBS@  \
++    @RDP_LIBS@      \
++    libguac-client-rdp.la
+ 
+ #
+ # Audio Input
+ #
+ 
+ guacai_cflags               =  \
+-    -Werror -Wall -Iinclude    \
++    -Wall -Iinclude            \
+     @COMMON_INCLUDE@           \
+     @COMMON_SSH_INCLUDE@       \
+     @LIBGUAC_INCLUDE@
+ 
+ guacai_ldflags =                   \
+-    -module -avoid-version -shared \
+-    @PTHREAD_LIBS@                 \
+-    @RDP_LIBS@
++    -module -avoid-version -shared
+ 
+ guacai_libadd =     \
      @COMMON_LTLIB@  \
 -    @LIBGUAC_LTLIB@
 +    @LIBGUAC_LTLIB@ \
@@ -260,18 +297,19 @@ Author: Dominik George <nik@naturalnet.de>
  
  #
  # Optional SFTP support
---- a/src/protocols/ssh/Makefile.am
-+++ b/src/protocols/ssh/Makefile.am
-@@ -46,7 +46,7 @@ noinst_HEADERS += ssh_agent.h
+diff -ur a/src/protocols/ssh/Makefile.am b/src/protocols/ssh/Makefile.am
+--- a/src/protocols/ssh/Makefile.am	2017-06-11 04:00:16.000000000 +0200
++++ b/src/protocols/ssh/Makefile.am	2017-08-23 13:46:21.660132920 +0200
+@@ -47,7 +47,7 @@
  endif
  
  libguac_client_ssh_la_CFLAGS = \
 -    -Werror -Wall -Iinclude    \
-+     -Wall -Iinclude    \
++    -Wall -Iinclude            \
      @COMMON_SSH_INCLUDE@       \
      @LIBGUAC_INCLUDE@          \
      @TERMINAL_INCLUDE@
-@@ -55,11 +55,11 @@ libguac_client_ssh_la_LIBADD = \
+@@ -56,11 +56,11 @@
      @COMMON_LTLIB@             \
      @COMMON_SSH_LTLIB@         \
      @LIBGUAC_LTLIB@            \
@@ -288,14 +326,15 @@ Author: Dominik George <nik@naturalnet.de>
 -    @SSL_LIBS@
 +    -version-info 0:0:0
  
---- a/src/protocols/telnet/Makefile.am
-+++ b/src/protocols/telnet/Makefile.am
-@@ -38,17 +38,17 @@ noinst_HEADERS =                \
-     telnet_client.h
+diff -ur a/src/protocols/telnet/Makefile.am b/src/protocols/telnet/Makefile.am
+--- a/src/protocols/telnet/Makefile.am	2017-06-11 04:00:16.000000000 +0200
++++ b/src/protocols/telnet/Makefile.am	2017-08-23 13:46:34.360246922 +0200
+@@ -39,17 +39,17 @@
+     user.h
  
  libguac_client_telnet_la_CFLAGS = \
 -    -Werror -Wall -Iinclude       \
-+     -Wall -Iinclude       \
++    -Wall -Iinclude               \
      @LIBGUAC_INCLUDE@             \
      @TERMINAL_INCLUDE@
  
@@ -313,22 +352,23 @@ Author: Dominik George <nik@naturalnet.de>
 -    @TELNET_LIBS@
 +    -version-info 0:0:0
  
---- a/src/protocols/vnc/Makefile.am
-+++ b/src/protocols/vnc/Makefile.am
-@@ -44,20 +44,20 @@ noinst_HEADERS += pulse.h
- endif
+diff -ur a/src/protocols/vnc/Makefile.am b/src/protocols/vnc/Makefile.am
+--- a/src/protocols/vnc/Makefile.am	2017-06-11 04:00:16.000000000 +0200
++++ b/src/protocols/vnc/Makefile.am	2017-08-23 13:46:47.716366799 +0200
+@@ -47,20 +47,20 @@
+     vnc.h
  
  libguac_client_vnc_la_CFLAGS =        \
 -    -Werror -Wall -pedantic -Iinclude \
-+    -Wall  -Iinclude                  \
++    -Wall -Iinclude                   \
      @COMMON_INCLUDE@                  \
      @COMMON_SSH_INCLUDE@              \
-     @LIBGUAC_INCLUDE@
+     @LIBGUAC_INCLUDE@                 \
+     @PULSE_INCLUDE@
  
  libguac_client_vnc_la_LDFLAGS = \
 -    -version-info 0:0:0         \
 -    @CAIRO_LIBS@                \
--    @PULSE_LIBS@                \
 -    @VNC_LIBS@ 
 +    -version-info 0:0:0
  
@@ -337,19 +377,37 @@ Author: Dominik George <nik@naturalnet.de>
 -    @LIBGUAC_LTLIB@
 +    @LIBGUAC_LTLIB@            \
 +    @CAIRO_LIBS@               \
-+    @PULSE_LIBS@               \
-+    @VNC_LIBS@
++    @VNC_LIBS@ 
  
  # Optional SFTP support
  if ENABLE_COMMON_SSH
---- a/src/terminal/Makefile.am
-+++ b/src/terminal/Makefile.am
-@@ -55,19 +55,17 @@ libguac_terminal_la_SOURCES =   \
-     terminal_handlers.c
+diff -ur a/src/pulse/Makefile.am b/src/pulse/Makefile.am
+--- a/src/pulse/Makefile.am	2017-04-04 06:08:12.000000000 +0200
++++ b/src/pulse/Makefile.am	2017-08-23 13:47:00.888485011 +0200
+@@ -29,12 +29,10 @@
+     pulse.c
+ 
+ libguac_pulse_la_CFLAGS =  \
+-    -Werror -Wall -pedantic \
++    -Wall                  \
+     @LIBGUAC_INCLUDE@
+ 
+ libguac_pulse_la_LIBADD = \
+-    @LIBGUAC_LTLIB@
+-
+-libguac_pulse_la_LDFLAGS = \
++    @LIBGUAC_LTLIB@       \
+     @PULSE_LIBS@
+ 
+diff -ur a/src/terminal/Makefile.am b/src/terminal/Makefile.am
+--- a/src/terminal/Makefile.am	2017-06-11 05:32:44.000000000 +0200
++++ b/src/terminal/Makefile.am	2017-08-23 13:47:13.608599153 +0200
+@@ -46,16 +46,14 @@
+     typescript.c
  
  libguac_terminal_la_CFLAGS = \
--    -Werror -Wall -pedantic  \
-+     -Wall   \
+-    -Werror -Wall            \
++    -Wall                    \
      @COMMON_INCLUDE@         \
      @LIBGUAC_INCLUDE@        \
      @PANGO_CFLAGS@           \
@@ -359,25 +417,19 @@ Author: Dominik George <nik@naturalnet.de>
 -    @LIBGUAC_LTLIB@
 -
 -libguac_terminal_la_LDFLAGS = \
--    @CAIRO_LIBS@              \
--    @MATH_LIBS@               \
--    @PANGO_LIBS@              \
--    @PANGOCAIRO_LIBS@         \
 +    @LIBGUAC_LTLIB@          \
-+    @CAIRO_LIBS@             \
-+    @MATH_LIBS@              \
-+    @PANGO_LIBS@             \
-+    @PANGOCAIRO_LIBS@        \
-     @PTHREAD_LIBS@
- 
---- a/tests/Makefile.am
-+++ b/tests/Makefile.am
-@@ -52,7 +52,7 @@ test_libguac_SOURCES =           \
+     @CAIRO_LIBS@              \
+     @MATH_LIBS@               \
+     @PANGO_LIBS@              \
+diff -ur a/tests/Makefile.am b/tests/Makefile.am
+--- a/tests/Makefile.am	2017-03-24 05:01:16.000000000 +0100
++++ b/tests/Makefile.am	2017-08-23 13:47:29.124738365 +0200
+@@ -49,7 +49,7 @@
      util/guac_unicode.c
  
  test_libguac_CFLAGS =       \
 -    -Werror -Wall -pedantic \
-+     -Wall  \
++    -Wall                   \
      @COMMON_INCLUDE@        \
      @LIBGUAC_INCLUDE@
  

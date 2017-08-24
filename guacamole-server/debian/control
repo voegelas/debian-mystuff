@@ -1,11 +1,16 @@
 Source: guacamole-server
 Priority: extra
-Maintainer: Debian Remote Maintainers <pkg-remote-team@lists.alioth.debian.org>
+Maintainer: Andreas Voegele <andreas@andreasvoegele.com>
 Uploaders:
  Dominik George <nik@naturalnet.de>,
 Build-Depends:
+ autoconf,
+ automake,
+ libtool,
  autotools-dev,
- debhelper (>= 10),
+ debhelper (>= 9),
+ libavcodec-dev,
+ libavutil-dev,
  libcairo-dev,
  libcunit1-dev,
  libfreerdp-dev (>= 1.0.1),
@@ -14,23 +19,22 @@ Build-Depends:
  libpulse-dev,
  libssh2-1-dev,
  libssl-dev,
+ libswscale-dev,
  libtelnet-dev,
  libvncserver-dev,
  libvorbis-dev,
  libwebp-dev,
  pkg-config,
-Standards-Version: 3.9.8
+Standards-Version: 3.9.6
 Section: net
-Homepage: http://guacamole.incubator.apache.org/
-Vcs-Browser: https://anonscm.debian.org/cgit/pkg-remote/packages/guacamole-server.git
-Vcs-Git: https://anonscm.debian.org/git/pkg-remote/packages/guacamole-server.git
+Homepage: https://guacamole.incubator.apache.org/
 
 Package: libguac-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
 Depends:
- libguac11 (= ${binary:Version}),
+ libguac12 (= ${binary:Version}),
  ${misc:Depends},
 Replaces:
  libguac1-dev,
@@ -173,7 +177,7 @@ Description: HTML5 web application for accessing remote desktops (Telnet support
  .
  This package contains protocol support for Telnet backends.
 
-Package: libguac11
+Package: libguac12
 Section: libs
 Architecture: any
 Multi-Arch: same

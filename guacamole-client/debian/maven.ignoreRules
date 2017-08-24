@@ -1,4 +1,0 @@
-org.apache.maven.plugins maven-javadoc-plugin * * * *
-org.apache.maven.plugins maven-source-plugin * * * *
-org.eclipse.jetty jetty-parent * * * *
-javax.annotation jsr250-api * * * *

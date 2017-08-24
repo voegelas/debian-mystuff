@@ -1,65 +1,23 @@
 Source: guacamole-client
 Priority: optional
-Maintainer: Debian Remote Maintainers <pkg-remote-team@lists.alioth.debian.org>
+Maintainer: Andreas Voegele <andreas@andreasvoegele.com>
 Uploaders:
  Dominik George <nik@naturalnet.de>,
  Thorsten Glaser <tg@mirbsd.org>,
 Build-Depends:
- debhelper (>= 10),
- default-jdk,
- junit4,
- libangular-maven-plugin-java,
- libatinject-jsr330-api-java,
- libcommons-codec-java,
- libguava-java,
- libguice-java,
- libjackson-json-java,
- libjersey1-core-java,
- libjersey1-guice-java,
- libjersey1-json-java,
- libjersey1-server-java,
- libjsr311-api-java,
- liblogback-java,
- libmaven-assembly-plugin-java,
- libmaven-dependency-plugin-java,
- libmaven-install-plugin-java,
- libmaven-plugin-testing-java,
- libmaven-war-plugin-java (>= 2.2-2~),
- libminify-maven-plugin-java,
- libservlet3.1-java,
- libslf4j-java,
- maven-debian-helper,
+ debhelper (>= 9),
  po-debconf,
  unzip,
-Standards-Version: 3.9.8
+Standards-Version: 3.9.6
 Section: net
-Homepage: http://guacamole.incubator.apache.org/
-Vcs-Browser: https://anonscm.debian.org/cgit/pkg-remote/packages/guacamole-client.git
-Vcs-Git: https://anonscm.debian.org/git/pkg-remote/packages/guacamole-client.git
+Homepage: https://guacamole.incubator.apache.org/
 
 Package: guacamole
 Architecture: all
 Depends:
  debconf,
  guacd,
- libatinject-jsr330-api-java,
- libcommons-codec-java,
- libguava-java,
- libguice-java,
- libjackson-json-java,
- libjersey1-core-java,
- libjersey1-guice-java,
- libjersey1-json-java,
- libjersey1-server-java,
- libjs-angularjs,
- libjs-jquery,
- libjs-lodash,
- libjsr311-api-java,
- liblogback-java,
- libservlet3.1-java,
- libslf4j-java,
  tomcat8,
- ${maven:Depends},
  ${misc:Depends},
 Recommends:
  apache2 | httpd,

@@ -1,0 +1,5 @@
+guacamole-auth-pam (0.9.13-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Fri, 25 Aug 2017 12:36:44 +0200

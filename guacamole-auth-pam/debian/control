@@ -1,0 +1,15 @@
+Source: guacamole-auth-pam
+Priority: optional
+Maintainer: Andreas Voegele <andreas@andreasvoegele.com>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.6
+Section: net
+Homepage: https://github.com/voegelas/guacamole-auth-pam
+
+Package: guacamole-auth-pam
+Architecture: all
+Depends:
+ guacamole (>= 0.9.13), guacamole (<< 0.9.14),
+ ${misc:Depends},
+Description: PAM authentication for Guacamole
+ This Guacamole extension authenticates users with PAM.

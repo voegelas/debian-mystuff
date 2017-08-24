@@ -1,3 +1,1 @@
 debian/etc/* /etc/guacamole/
-extensions/guacamole-auth-noauth/target/guacamole-auth-noauth-0.9.9.jar /usr/share/java/
-guacamole/target/guacamole /usr/share/guacamole/

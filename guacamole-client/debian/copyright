@@ -1,10 +1,7 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: guacamole
-Upstream-Contact: Michael Jumper <zhangmaike@users.sourceforge.net>
-Source: http://guacamole.sourceforge.net/
-Files-Excluded: guacamole/src/main/webapp/lib/angular
- guacamole/src/main/webapp/lib/jquery
- guacamole/src/main/webapp/lib/lodash
+Upstream-Contact: Michael Jumper <mike.jumper@guac-dev.org>
+Source: https://guacamole.incubator.apache.org/
 
 Files: *
 Copyright: 2011, Michael Jumper <zhangmaike@users.sourceforge.net>
