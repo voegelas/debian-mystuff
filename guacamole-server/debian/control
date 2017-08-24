@@ -1,0 +1,198 @@
+Source: guacamole-server
+Priority: extra
+Maintainer: Debian Remote Maintainers <pkg-remote-team@lists.alioth.debian.org>
+Uploaders:
+ Dominik George <nik@naturalnet.de>,
+Build-Depends:
+ autotools-dev,
+ debhelper (>= 10),
+ libcairo-dev,
+ libcunit1-dev,
+ libfreerdp-dev (>= 1.0.1),
+ libossp-uuid-dev,
+ libpango1.0-dev,
+ libpulse-dev,
+ libssh2-1-dev,
+ libssl-dev,
+ libtelnet-dev,
+ libvncserver-dev,
+ libvorbis-dev,
+ libwebp-dev,
+ pkg-config,
+Standards-Version: 3.9.8
+Section: net
+Homepage: http://guacamole.incubator.apache.org/
+Vcs-Browser: https://anonscm.debian.org/cgit/pkg-remote/packages/guacamole-server.git
+Vcs-Git: https://anonscm.debian.org/git/pkg-remote/packages/guacamole-server.git
+
+Package: libguac-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends:
+ libguac11 (= ${binary:Version}),
+ ${misc:Depends},
+Replaces:
+ libguac1-dev,
+Description: Guacamole proxy daemon (core library headers)
+ The Guacamole proxy daemon, guacd, translates between remote desktop
+ protocols (like VNC) and the Guacamole protocol using protocol plugins.
+ Once a user is authenticated with the Guacamole web application, a tunnel
+ is established through the web application to guacd, allowing the JavaScript
+ client to communicate to an arbitrary remote desktop server through guacd.
+ .
+ This package contains development headers for the core library.
+
+Package: guacd
+Architecture: any
+Depends:
+ lsb-base (>= 3.0-6),
+ ${misc:Depends},
+ ${shlibs:Depends},
+Recommends:
+ libguac-client-rdp0,
+ libguac-client-ssh0,
+ libguac-client-vnc0,
+Suggests:
+ libguac-client-telnet0,
+Description: HTML5 web application for accessing remote desktops (proxy daemon)
+ Guacamole is an HTML5 web application that provides access to a desktop
+ environment using remote desktop protocols. A centralized server acts as a
+ tunnel and proxy, allowing access to multiple desktops through a web browser.
+ No plugins are needed: the client requires nothing more than a web browser
+ supporting HTML5 and AJAX.
+ .
+ The Guacamole proxy daemon, guacd, translates between remote desktop
+ protocols (like VNC) and the Guacamole protocol using protocol plugins.
+ Once a user is authenticated with the Guacamole web application, a tunnel
+ is established through the web application to guacd, allowing the JavaScript
+ client to communicate to an arbitrary remote desktop server through guacd.
+ .
+ This package contains the daemon binary.
+
+Package: libguac-client-rdp0
+Section: libs
+Architecture: any
+Multi-Arch: same
+Pre-Depends:
+ ${misc:Pre-Depends},
+Depends:
+ ghostscript,
+ ${misc:Depends},
+ ${shlibs:Depends},
+Recommends:
+ libfreerdp-plugins-standard,
+Description: HTML5 web application for accessing remote desktops (RDP support)
+ Guacamole is an HTML5 web application that provides access to a desktop
+ environment using remote desktop protocols. A centralized server acts as a
+ tunnel and proxy, allowing access to multiple desktops through a web browser.
+ No plugins are needed: the client requires nothing more than a web browser
+ supporting HTML5 and AJAX.
+ .
+ The Guacamole proxy daemon, guacd, translates between remote desktop
+ protocols (like VNC) and the Guacamole protocol using protocol plugins.
+ Once a user is authenticated with the Guacamole web application, a tunnel
+ is established through the web application to guacd, allowing the JavaScript
+ client to communicate to an arbitrary remote desktop server through guacd.
+ .
+ This package contains protocol support for RDP backends.
+
+Package: libguac-client-ssh0
+Section: libs
+Architecture: any
+Multi-Arch: same
+Pre-Depends:
+ ${misc:Pre-Depends},
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Recommends:
+ openssh-server,
+Description: HTML5 web application for accessing remote desktops (SSH support)
+ Guacamole is an HTML5 web application that provides access to a desktop
+ environment using remote desktop protocols. A centralized server acts as a
+ tunnel and proxy, allowing access to multiple desktops through a web browser.
+ No plugins are needed: the client requires nothing more than a web browser
+ supporting HTML5 and AJAX.
+ .
+ The Guacamole proxy daemon, guacd, translates between remote desktop
+ protocols (like VNC) and the Guacamole protocol using protocol plugins.
+ Once a user is authenticated with the Guacamole web application, a tunnel
+ is established through the web application to guacd, allowing the JavaScript
+ client to communicate to an arbitrary remote desktop server through guacd.
+ .
+ This package contains protocol support for SSH backends.
+
+Package: libguac-client-vnc0
+Section: libs
+Architecture: any
+Multi-Arch: same
+Pre-Depends:
+ ${misc:Pre-Depends},
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Recommends:
+ vnc4server,
+Description: HTML5 web application for accessing remote desktops (VNC support)
+ Guacamole is an HTML5 web application that provides access to a desktop
+ environment using remote desktop protocols. A centralized server acts as a
+ tunnel and proxy, allowing access to multiple desktops through a web browser.
+ No plugins are needed: the client requires nothing more than a web browser
+ supporting HTML5 and AJAX.
+ .
+ The Guacamole proxy daemon, guacd, translates between remote desktop
+ protocols (like VNC) and the Guacamole protocol using protocol plugins.
+ Once a user is authenticated with the Guacamole web application, a tunnel
+ is established through the web application to guacd, allowing the JavaScript
+ client to communicate to an arbitrary remote desktop server through guacd.
+ .
+ This package contains protocol support for VNC backends.
+
+Package: libguac-client-telnet0
+Section: libs
+Architecture: any
+Multi-Arch: same
+Pre-Depends:
+ ${misc:Pre-Depends},
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: HTML5 web application for accessing remote desktops (Telnet support)
+ Guacamole is an HTML5 web application that provides access to a desktop
+ environment using remote desktop protocols. A centralized server acts as a
+ tunnel and proxy, allowing access to multiple desktops through a web browser.
+ No plugins are needed: the client requires nothing more than a web browser
+ supporting HTML5 and AJAX.
+ .
+ The Guacamole proxy daemon, guacd, translates between remote desktop
+ protocols (like VNC) and the Guacamole protocol using protocol plugins.
+ Once a user is authenticated with the Guacamole web application, a tunnel
+ is established through the web application to guacd, allowing the JavaScript
+ client to communicate to an arbitrary remote desktop server through guacd.
+ .
+ This package contains protocol support for Telnet backends.
+
+Package: libguac11
+Section: libs
+Architecture: any
+Multi-Arch: same
+Pre-Depends:
+ ${misc:Pre-Depends},
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: HTML5 web application for accessing remote desktops (library)
+ Guacamole is an HTML5 web application that provides access to a desktop
+ environment using remote desktop protocols. A centralized server acts as a
+ tunnel and proxy, allowing access to multiple desktops through a web browser.
+ No plugins are needed: the client requires nothing more than a web browser
+ supporting HTML5 and AJAX.
+ .
+ The Guacamole proxy daemon, guacd, translates between remote desktop
+ protocols (like VNC) and the Guacamole protocol using protocol plugins.
+ Once a user is authenticated with the Guacamole web application, a tunnel
+ is established through the web application to guacd, allowing the JavaScript
+ client to communicate to an arbitrary remote desktop server through guacd.
+ .
+ This package contains the core protocol library.

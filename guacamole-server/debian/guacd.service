@@ -1,0 +1,16 @@
+[Unit]
+Description=Guacamole proxy daemon
+Documentation=man:guacd(8)
+After=network.target
+
+[Service]
+Type=forking
+User=guacd
+Group=guacd
+RuntimeDirectory=guacd
+PIDFile=/var/run/guacd/guacd.pid
+EnvironmentFile=-/etc/default/guacd
+ExecStart=/usr/sbin/guacd $DAEMON_ARGS -b $LISTEN_ADDRESS -l $LISTEN_PORT -p /var/run/guacd/guacd.pid
+
+[Install]
+WantedBy=multi-user.target

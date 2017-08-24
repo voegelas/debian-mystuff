@@ -1,0 +1,170 @@
+guacamole-client (0.9.9+dfsg-1) unstable; urgency=medium
+
+  [ Dominik George ]
+  * Acknowledge NMUs.
+  * New upstream version. (Closes: #814364)
+    + Repackaged to remove some pre-built library code.
+  * Suggest xrdp.
+  * Merge guacamole and guacamole-tomcat packages into guacamole.
+    + Deploys Guacamole to the system tomcat8 instance.
+    + Configures Apache 2.4 if available.
+  * Add the noauth extension.
+  * Move to Debian Remote Maintainers team.
+     + Move git to pkg-remote.
+
+  [ Thorsten Glaser ]
+  * Patch the code and buildsystem until it works on Debian,
+    with the versions of its dependencies Debian provides.
+  * Unbreak Maven build of backend and extensions.
+
+  [ Emmanuel Bourg ]
+  * Disable websocket implementations we neither use nor can
+    actually build in Debian stretch/sid.
+
+ -- Dominik George <nik@naturalnet.de>  Tue, 29 Nov 2016 12:51:09 +0100
+
+guacamole-client (0.8.3-1.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fixed the build failure with Maven 3 (Closes: #805665)
+  * debian/control:
+    - Changed the Vcs-* field to point to the Alioth packaging repository
+    - Standards-Version updated to 3.9.6 (no changes)
+    - Removed the duplicate Section fields on the binary packages
+    - Suggest jetty8 instead of jetty for the guacamole package
+    - Removed the build dependency on java6-sdk
+  * Transition to the Servlet API 3.1 (Closes: #801032)
+  * Switch to debhelper level 9
+  * Build with the DH sequencer instead of CDBS
+  * Replaced 0002-guacamole-remove-missing-plugins.patch with Maven rules
+  * debian/copyright: Updated the Format URI
+  * Added the Turkish translation by Atila KOÇ (Closes: #799783)
+  * Added the Polish translation by Magdalena Z. Kubot (Closes: #728927)
+  * Added the Italian translation by Beatrice Torracca (Closes: #729793)
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Wed, 06 Jan 2016 01:14:50 +0100
+
+guacamole-client (0.8.3-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Depend on tomcat8 instead of tomcat6 (Closes: #759621)
+
+ -- Emmanuel Bourg <ebourg@apache.org>  Wed, 28 Jan 2015 14:49:45 +0100
+
+guacamole-client (0.8.3-1) unstable; urgency=low
+
+  * Merge changes from 0.8.3
+  * Migrate to org.glyptodon.guacamole naming
+  * Remove use of Maven sources and javadoc plugins
+
+ -- Michael Jumper <mike.jumper@guac-dev.org>  Fri, 20 Sep 2013 11:28:00 -0700
+
+guacamole-client (0.8.2-1) UNRELEASED; urgency=low
+
+  * Merge changes from 0.8.2
+  * Migrate to new upstream source package (guacamole-client)
+
+ -- Michael Jumper <mike.jumper@guac-dev.org>  Sat, 13 Jul 2013 23:18:00 -0700
+
+guacamole (0.8.1-1) UNRELEASED; urgency=low
+
+  * Merged 0.8.1 source for guacamole
+  * Merged 0.7.2 source for guacamole-common-js
+
+ -- Michael Jumper <zhangmaike@users.sourceforge.net>  Thu, 30 May 2013 12:07:00 -0700
+
+guacamole (0.8.0-1) UNRELEASED; urgency=low
+
+  * Merged 0.8.0 source for guacamole
+  * Merged 0.8.0 source for guacamole-ext
+  * Merged 0.8.0 source for guacamole-common
+  * Merged 0.7.1 source for guacamole-common-js
+
+ -- Michael Jumper <zhangmaike@users.sourceforge.net>  Mon, 18 Mar 2013 13:31:00 -0700
+
+guacamole (0.7.1-1) UNRELEASED; urgency=low
+
+  * Added Japanese translation.
+    Thanks to victory <victory.deb@gmail.com> (Closes: 692476)
+  * Merged 0.7.1 source for guacamole
+  * Separated guacamole-ext version from guacamole version
+
+ -- Michael Jumper <zhangmaike@users.sourceforge.net>  Tue, 15 Jan 2013 16:50:49 -0800
+
+guacamole (0.7.0-1) UNRELEASED; urgency=low
+
+  * Merged 0.7.0 source for guacamole
+  * Merged 0.7.0 source for guacamole-ext
+  * Merged 0.7.0 source for guacamole-common
+  * Merged 0.7.0 source for guacamole-common-js
+
+ -- Michael Jumper <zhangmaike@users.sourceforge.net>  Sat, 01 Dec 2012 14:36:18 -0800
+
+guacamole (0.6.2-1) UNRELEASED; urgency=low
+
+  * Merged 0.6.2 source for guacamole
+  * Merged 0.6.2 source for guacamole-ext
+  * Merged 0.6.2 source for guacamole-common
+  * Merged 0.6.2 source for guacamole-common-js
+
+ -- Michael Jumper <zhangmaike@users.sourceforge.net>  Sat, 15 Oct 2012 13:58:00 -0700
+
+guacamole (0.6.1-1) UNRELEASED; urgency=low
+
+  * Merged 0.6.1 source for guacamole
+  * Merged 0.6.1 source for guacamole-ext
+  * Merged 0.6.1 source for guacamole-common
+  * Merged 0.6.1 source for guacamole-common-js
+  * Switched to NEW guac-dev.org URL pattern in all debian/watch*
+  * Modified debian/rules such that get-orig-source downloads proper source
+    tarballs, which may not be the same version number as Guacamole
+
+ -- Michael Jumper <zhangmaike@users.sourceforge.net>  Sat, 11 Aug 2012 14:27:00 -0700
+
+guacamole (0.6.0-1) unstable; urgency=low
+
+  * Merged 0.6.0 source for all components
+  * Boosted policy compliance to 3.9.3 (no changes)
+  * Update build dependencies to latest compatible guacd
+  * Updated files to match upstream rename of guacamole-common-auth to
+    guacamole-ext
+  * Updated component versions in maven-debian-helper files
+  * Dropped debian/patches adopted upstream:
+    0004-guacamole-common-remove-apache-commons.patch
+  * Switched to guac-dev.org URL pattern in all debian/watch*
+
+ -- Michael Jumper <zhangmaike@users.sourceforge.net>  Sat, 5 May 2012 18:34:00 -0700
+
+guacamole (0.5.0-1) unstable; urgency=low
+
+  [ Michael Jumper ]
+  * Added guacamole-common-auth
+  * Using 0.5.0 source
+  * Removed patches which are now part of upstream
+  * Patched source removing dependency on Apache Commons
+
+  [ Christian Perrier ]
+  * Czech (Michal Simunek).  Closes: #650763
+  * Danish (Joe Hansen).  Closes: #650850
+  * Russian (Yuri Kozlov).  Closes: #650875
+  * Portuguese (Rui Branco).  Closes: #651102
+  * Dutch; (Jeroen Schot).  Closes: #651190
+  * German (Holger Wansing).  Closes: #651222
+  * Swedish (Martin Bagge / brother).  Closes: #651344
+  * French (Julien Patriarca).  Closes: #651631
+  * Brazilian Portuguese (Adriano Rafael Gomes).  Closes: #652053
+  * Spanish; (Francisco Javier Cuadrado).  Closes: #652095
+
+ -- Michael Jumper <zhangmaike@users.sourceforge.net>  Sat, 31 Dec 2011 18:56:00 -0800
+
+guacamole (0.4.0-1) unstable; urgency=low
+
+  * Initial release (closes: #643722)
+
+ -- Michael Jumper <zhangmaike@users.sourceforge.net>  Sat, 16 Jul 2011 12:35:00 -0700
+
+guacamole (0.3.0-1) UNRELEASED; urgency=low
+
+  * Initial release.
+
+ -- Michael Jumper <zhangmaike@users.sourceforge.net>  Thu, 3 Mar 2011 01:37:03 -0800

@@ -1,0 +1,33 @@
+From: Teckids e.V. Debian Team <debian@lists.teckids.org>
+Subject: Some fixes to the JS builds
+ * Raise language level to not have to be IE8 compatible.
+ * Remove stripped libraries from build.
+--- a/guacamole-common-js/pom.xml
++++ b/guacamole-common-js/pom.xml
+@@ -84,6 +84,7 @@
+ 
+                             <charset>UTF-8</charset>
+                             <jsEngine>CLOSURE</jsEngine>
++                            <closureLanguage>ECMASCRIPT5</closureLanguage>
+ 
+                             <jsSourceDir>/</jsSourceDir>
+                             <jsTargetDir>/</jsTargetDir>
+--- a/guacamole/pom.xml
++++ b/guacamole/pom.xml
+@@ -156,8 +156,6 @@
+                             <jsFinalFile>guacamole.js</jsFinalFile>
+                             
+                             <jsSourceFiles>
+-                                <jsSourceFile>lib/jquery/jquery.js</jsSourceFile>
+-                                <jsSourceFile>lib/angular/angular.min.js</jsSourceFile>
+                                 <jsSourceFile>lib/angular-module-shim/angular-module-shim.js</jsSourceFile>
+                                 <jsSourceFile>lib/messageformat/messageformat.js</jsSourceFile>
+                                 <jsSourceFile>license.txt</jsSourceFile>
+@@ -175,6 +173,7 @@
+                                 <jsSourceExclude>**/*.test.js</jsSourceExclude>
+                             </jsSourceExcludes>
+                             <jsEngine>CLOSURE</jsEngine>
++                            <closureLanguage>ECMASCRIPT5</closureLanguage>
+                             
+                         </configuration>
+                         <goals>

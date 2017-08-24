@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# Simple postinst script for guacd which creates a "guacd" user and group
+# and sets the permissions and ownership of /var/run/guacd (the location
+# of the guacd.pid file).
+#
+
+
+# Exit on errors
+set -e
+
+GUACD_USER="guacd"              # guacd username
+GUACD_GROUP="guacd"             # guacd group
+GUACD_HOME="/var/run/guacd"     # guacd home directory
+
+# Convenience function for error conditions.
+fail() {
+    echo "$1" >&2
+    exit 1
+}
+
+# Create guacd group if it does not exist
+groupadd -fr "$GUACD_GROUP" ||\
+    fail "Could not create group \"$GUACD_GROUP\""
+
+# Create guacd user if it does not exist
+useradd -g "$GUACD_GROUP" -d "$GUACD_HOME" -s /bin/false -r "$GUACD_USER" || (
+    if [ "$?" != "9" ]
+    then
+        fail "Could not create user \"$GUACD_USER\""
+    fi
+)
+
+#DEBHELPER#
+
+# Exit successfully
+exit 0

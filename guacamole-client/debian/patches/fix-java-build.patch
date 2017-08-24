@@ -1,0 +1,108 @@
+# DP: first hunk is from original Debian package to fix .war file name
+# DP: packages never use -Werror, that's for upstream
+# DP: exclude non-JSR356 websocket implementations we cannot build
+# DP: remove dependencies for those removed implementations
+# DP: add various dependencies to build
+# DP: remove extensions we cannot possibly build, for now
+
+--- a/guacamole/pom.xml
++++ b/guacamole/pom.xml
+@@ -48,6 +48,8 @@
+     </properties>
+ 
+     <build>
++        <!-- guacamole.war -->
++        <finalName>guacamole</finalName>
+         <plugins>
+ 
+             <!-- Written for 1.6 -->
+@@ -60,9 +62,13 @@
+                     <target>1.6</target>
+                     <compilerArgs>
+                         <arg>-Xlint:all</arg>
+-                        <arg>-Werror</arg>
+                     </compilerArgs>
+                     <fork>true</fork>
++		    <excludes>
++			<exclude>**/glyptodon/guacamole/net/basic/websocket/jetty8/**</exclude>
++			<exclude>**/glyptodon/guacamole/net/basic/websocket/jetty9/**</exclude>
++			<exclude>**/glyptodon/guacamole/net/basic/websocket/tomcat/**</exclude>
++		    </excludes>
+                 </configuration>
+             </plugin>
+ 
+@@ -239,50 +245,6 @@
+             <scope>runtime</scope>
+         </dependency>
+ 
+-        <!-- Jetty 8 servlet API (websocket)  -->
+-        <dependency>
+-            <groupId>org.eclipse.jetty</groupId>
+-            <artifactId>jetty-websocket</artifactId>
+-            <version>8.1.1.v20120215</version>
+-            <scope>provided</scope>
+-        </dependency>
+-
+-        <!-- Jetty 9.0 servlet API (websocket)  -->
+-        <dependency>
+-            <groupId>org.eclipse.jetty</groupId>
+-            <artifactId>jetty-parent</artifactId>
+-            <version>20</version>
+-            <scope>provided</scope>
+-            <type>pom</type>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.eclipse.jetty.websocket</groupId>
+-            <artifactId>websocket-api</artifactId>
+-            <version>9.0.7.v20131107</version>
+-            <scope>provided</scope>
+-        </dependency>
+-        <dependency>
+-            <groupId>org.eclipse.jetty.websocket</groupId>
+-            <artifactId>websocket-servlet</artifactId>
+-            <version>9.0.7.v20131107</version>
+-            <scope>provided</scope>
+-        </dependency>
+-
+-        <!-- Tomcat servlet API (websocket)  -->
+-        <dependency>
+-            <groupId>org.apache.tomcat</groupId>
+-            <artifactId>tomcat-catalina</artifactId>
+-            <version>7.0.37</version>
+-            <scope>provided</scope>
+-        </dependency>
+-
+-        <dependency>
+-            <groupId>org.apache.tomcat</groupId>
+-            <artifactId>tomcat-coyote</artifactId>
+-            <version>7.0.37</version>
+-            <scope>provided</scope>
+-        </dependency>
+-
+         <!-- Guice - Dependency Injection -->
+         <dependency>
+             <groupId>com.google.inject</groupId>
+@@ -332,6 +294,12 @@
+             <version>1.17.1</version>
+         </dependency>
+ 
++	<dependency>
++	    <groupId>javax.ws.rs</groupId>
++	    <artifactId>jsr311-api</artifactId>
++	    <version>debian</version>
++	</dependency>
++
+     </dependencies>
+ 
+ </project>
+--- a/pom.xml
++++ b/pom.xml
+@@ -28,8 +28,6 @@
+         <module>guacamole-common-js</module>
+ 
+         <!-- Authentication extensions -->
+-        <module>extensions/guacamole-auth-jdbc</module>
+-        <module>extensions/guacamole-auth-ldap</module>
+         <module>extensions/guacamole-auth-noauth</module>
+ 
+     </modules>

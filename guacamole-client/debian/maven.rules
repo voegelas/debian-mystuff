@@ -1,0 +1,11 @@
+org.slf4j slf4j-api jar debian
+org.slf4j slf4j-jcl jar debian
+org.apache.maven maven-war-plugin plugin *
+org.apache.maven maven-assembly-plugin plugin debian
+org.glyptodon.guacamole guacamole-common jar *
+org.glyptodon.guacamole guacamole-ext jar *
+org.glyptodon.guacamole guacamole-common-js zip *
+junit junit jar s/4\..*/4.x/ * *
+javax.servlet s/servlet-api/javax.servlet-api/ jar s/.*/3.1/
+javax.websocket javax.websocket-api jar s/.*/1.0/
+javax.ws.rs jsr311-api jar debian

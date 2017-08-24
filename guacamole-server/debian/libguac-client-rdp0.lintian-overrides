@@ -1,0 +1,5 @@
+# false positive for FreeRDP plugins
+libguac-client-rdp0 binary: hardening-no-fortify-functions
+
+# loaded as plugin via dlopen()
+libguac-client-rdp0 binary: non-dev-pkg-with-shlib-symlink

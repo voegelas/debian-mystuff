@@ -1,0 +1,67 @@
+#!/bin/sh
+#
+# Simple postinst script for Guacamole which creates a "guacamole-web" group
+# and sets the permissions of user-mapping.xml (a file which must sometimes
+# contain plaintext passwords) appropriately.
+#
+
+# Exit on errors
+set -e
+
+# Use debconf
+. /usr/share/debconf/confmodule
+
+GUAC_GROUP="guacamole-web"
+GUAC_FILES="/etc/guacamole/user-mapping.xml"
+GUAC_FILE_OWNERSHIP="root:$GUAC_GROUP"
+GUAC_FILE_MOD="640"
+SC_USER="tomcat8"
+
+# Convenience function for error conditions
+fail() {
+    echo "$1" >&2
+    exit 1
+}
+
+#DEBHELPER#
+
+# Create guacamole-web group if it does not exist
+groupadd -fr "$GUAC_GROUP" ||\
+    fail "Could not create group \"$GUAC_GROUP\""
+
+# Change ownership and permissions of Guacamole files
+for FILE in $GUAC_FILES
+do
+
+    # Update ownership
+    chown "$GUAC_FILE_OWNERSHIP" "$FILE" ||\
+        fail "Unable to change ownership of $FILE"
+
+    # Update permissions
+    chmod "$GUAC_FILE_MOD" "$FILE" ||\
+        fail "Unable to change permissions of $FILE"
+
+done
+
+# Add servlet container user to guacamole group
+usermod --append -G "$GUAC_GROUP" "$SC_USER" ||\
+    fail "Could not add $SC_USER to group \"$GUAC_GROUP\""
+
+# Restart Tomcat if asked
+db_get guacamole-tomcat/restart-server
+if [ "$RET" = "true" ]
+then
+    invoke-rc.d tomcat8 restart
+fi
+
+# Configure webserver
+if test -e /usr/share/apache2/apache2-maintscript-helper; then
+	db_stop
+	. /usr/share/apache2/apache2-maintscript-helper
+	apache2_invoke enmod proxy
+	apache2_invoke enmod proxy_http
+	apache2_invoke enmod proxy_wstunnel
+	apache2_invoke enconf guacamole
+fi
+
+exit 0

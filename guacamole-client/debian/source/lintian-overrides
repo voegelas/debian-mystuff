@@ -1,0 +1,11 @@
+# checked source file; code is ok
+guacamole-client source: insane-line-length-in-source-file guacamole/src/main/webapp/generated/templates-main/templates.js *
+
+# false positive; insane-line-length-in-source-file is the real issue here
+guacamole-client source: source-contains-prebuilt-javascript-object guacamole/src/main/webapp/generated/templates-main/templates.js *
+
+# false positive; insane-line-length-in-source-file is the real issue here
+guacamole-client source: source-is-missing guacamole/src/main/webapp/generated/templates-main/templates.js *
+
+# upstream does not sign tarballs; discussing that
+guacamole-client source: debian-watch-may-check-gpg-signature

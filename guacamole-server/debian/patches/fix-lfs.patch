@@ -1,0 +1,12 @@
+# DP: add Large File Support
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -41,6 +41,7 @@ AC_CHECK_HEADERS([fcntl.h stdlib.h strin
+ 
+ # Source characteristics
+ AC_DEFINE([_XOPEN_SOURCE], [700], [Uses X/Open and POSIX APIs])
++AC_SYS_LARGEFILE
+ 
+ # Check for whether math library is required
+ AC_CHECK_LIB([m], [cos],

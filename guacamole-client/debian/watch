@@ -1,0 +1,3 @@
+version=3
+opts="repack,repacksuffix=+dfsg,dversionmangle=s/\+dfsg\d*$//" \
+http://sf.net/guacamole/guacamole-client-([0-9.]+)\.tar\.gz

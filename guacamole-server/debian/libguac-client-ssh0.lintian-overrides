@@ -1,0 +1,2 @@
+# loaded as plugin via dlopen()
+libguac-client-ssh0 binary: non-dev-pkg-with-shlib-symlink

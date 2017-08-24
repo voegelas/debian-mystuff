@@ -1,0 +1,12 @@
+doc/guacamole-example/pom.xml --ignore
+extensions/guacamole-auth-ldap/pom.xml --ignore
+extensions/guacamole-auth-noauth/pom.xml
+extensions/guacamole-auth-jdbc/modules/guacamole-auth-jdbc-base/pom.xml --ignore
+extensions/guacamole-auth-jdbc/modules/guacamole-auth-jdbc-mysql/pom.xml --ignore
+extensions/guacamole-auth-jdbc/modules/guacamole-auth-jdbc-postgresql/pom.xml --ignore
+extensions/guacamole-auth-jdbc/pom.xml --ignore
+guacamole-common-js/pom.xml
+guacamole-common/pom.xml
+guacamole-ext/pom.xml
+guacamole/pom.xml
+pom.xml

@@ -1,0 +1,2 @@
+# upstream does not (yet) provide signatures
+guacamole-server source: debian-watch-may-check-gpg-signature

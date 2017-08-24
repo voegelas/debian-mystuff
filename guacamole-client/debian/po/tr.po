@@ -1,0 +1,47 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Atila KOÇ <koc@artielektronik.com.tr>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: guacamole-client\n"
+"Report-Msgid-Bugs-To: guacamole@packages.debian.org\n"
+"POT-Creation-Date: 2012-06-01 14:42-0700\n"
+"PO-Revision-Date: 2015-09-08 10:42+0200\n"
+"Last-Translator: Atila KOÇ <koc@artielektronik.com.tr>\n"
+"Language-Team: Turkish <debian-l10n-turkish@lists.debian.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.6.10\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#. Type: boolean
+#. Description
+#: ../guacamole-tomcat.templates:2001
+msgid "Restart Tomcat server?"
+msgstr "Tomcat sunucusu yeniden başlatılsın mı?"
+
+#. Type: boolean
+#. Description
+#: ../guacamole-tomcat.templates:2001
+msgid ""
+"The installation of Guacamole under Tomcat requires restarting the Tomcat "
+"server, as Tomcat will only read configuration files on startup."
+msgstr ""
+"Tomcat yapılandırma dosyalarını yalnızca başlangıçta okuduğundan, "
+"Guacamole'nin Tomcat altına yapılan bu kurulumu Tomcat sunucusunun yeniden "
+"başlatılmasını gerektirir."
+
+#. Type: boolean
+#. Description
+#: ../guacamole-tomcat.templates:2001
+msgid ""
+"You can also restart Tomcat manually by running \"invoke-rc.d tomcat8 restart"
+"\" as root."
+msgstr ""
+"root kimliği ile \"invoke-rc.d tomcat8 restart\" komutunu çalıştırarak da "
+"Tomcat'i yeniden başlatabilirsiniz."

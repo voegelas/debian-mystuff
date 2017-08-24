@@ -1,0 +1,36 @@
+# Translation of guacamole debconf templates to Polish.
+# Copyright (C) 2011
+# This file is distributed under the same license as the guacamole package.
+#
+# Magdalena Z. Kubot <magdalena.kubot@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: guacamole-client\n"
+"Report-Msgid-Bugs-To: guacamole@packages.debian.org\n"
+"POT-Creation-Date: 2012-06-01 14:42-0700\n"
+"PO-Revision-Date: 2013-11-06 21:12+0100\n"
+"Last-Translator: Magdalena Z. Kubot <magdalena.kubot@gmail.com>\n"
+"Language-Team: Polish <debian-l10n-polish@lists.debian.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. Type: boolean
+#. Description
+#: ../guacamole-tomcat.templates:2001
+msgid "Restart Tomcat server?"
+msgstr "Zrestartować serwer Tomcat?"
+
+#. Type: boolean
+#. Description
+#: ../guacamole-tomcat.templates:2001
+msgid "The installation of Guacamole under Tomcat requires restarting the Tomcat server, as Tomcat will only read configuration files on startup."
+msgstr "Instalacja Guacamole pod Tomcat wymaga zrestartowania serwera Tomcat, ponieważ Tomcat czyta pliki konfiguracyjne tylko podczas startu."
+
+#. Type: boolean
+#. Description
+#: ../guacamole-tomcat.templates:2001
+msgid "You can also restart Tomcat manually by running \"invoke-rc.d tomcat8 restart\" as root."
+msgstr "Można również zrestartować Tomcat ręcznie wykonując jako administrator \"invoke-rc.d tomcat8 restart\"."

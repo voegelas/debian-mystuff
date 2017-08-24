@@ -1,0 +1,26 @@
+#!/usr/bin/make -f
+
+export JAVA_HOME = /usr/lib/jvm/default-java
+
+%:
+	dh $@ --buildsystem=maven
+
+override_dh_auto_build:
+	dh_auto_build -- install
+
+override_dh_install:
+	dh_install
+
+	# Move own libraries away and remove library copies
+	# dh_link will fix that later
+	mv debian/guacamole/usr/share/guacamole/guacamole/WEB-INF/lib/guacamole*.jar debian/guacamole/usr/share/java/
+	rm -f debian/guacamole/usr/share/guacamole/guacamole/WEB-INF/lib/*
+
+	# Remove unnecessary LICENSE files
+	rm -f debian/guacamole/usr/share/guacamole/guacamole/fonts/carlito/LICENSE
+	rm -f debian/guacamole/usr/share/guacamole/guacamole/lib/angular-module-shim/LICENSE
+	rm -f debian/guacamole/usr/share/guacamole/guacamole/lib/angular-translate/LICENSE
+	rm -f debian/guacamole/usr/share/guacamole/guacamole/lib/blob/LICENSE.md
+	rm -f debian/guacamole/usr/share/guacamole/guacamole/lib/filesaver/LICENSE.md
+	rm -f debian/guacamole/usr/share/guacamole/guacamole/lib/messageformat/LICENSE
+	rm -f debian/guacamole/usr/share/guacamole/guacamole/license.txt

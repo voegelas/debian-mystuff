@@ -1,0 +1,84 @@
+Source: guacamole-client
+Priority: optional
+Maintainer: Debian Remote Maintainers <pkg-remote-team@lists.alioth.debian.org>
+Uploaders:
+ Dominik George <nik@naturalnet.de>,
+ Thorsten Glaser <tg@mirbsd.org>,
+Build-Depends:
+ debhelper (>= 10),
+ default-jdk,
+ junit4,
+ libangular-maven-plugin-java,
+ libatinject-jsr330-api-java,
+ libcommons-codec-java,
+ libguava-java,
+ libguice-java,
+ libjackson-json-java,
+ libjersey1-core-java,
+ libjersey1-guice-java,
+ libjersey1-json-java,
+ libjersey1-server-java,
+ libjsr311-api-java,
+ liblogback-java,
+ libmaven-assembly-plugin-java,
+ libmaven-dependency-plugin-java,
+ libmaven-install-plugin-java,
+ libmaven-plugin-testing-java,
+ libmaven-war-plugin-java (>= 2.2-2~),
+ libminify-maven-plugin-java,
+ libservlet3.1-java,
+ libslf4j-java,
+ maven-debian-helper,
+ po-debconf,
+ unzip,
+Standards-Version: 3.9.8
+Section: net
+Homepage: http://guacamole.incubator.apache.org/
+Vcs-Browser: https://anonscm.debian.org/cgit/pkg-remote/packages/guacamole-client.git
+Vcs-Git: https://anonscm.debian.org/git/pkg-remote/packages/guacamole-client.git
+
+Package: guacamole
+Architecture: all
+Depends:
+ debconf,
+ guacd,
+ libatinject-jsr330-api-java,
+ libcommons-codec-java,
+ libguava-java,
+ libguice-java,
+ libjackson-json-java,
+ libjersey1-core-java,
+ libjersey1-guice-java,
+ libjersey1-json-java,
+ libjersey1-server-java,
+ libjs-angularjs,
+ libjs-jquery,
+ libjs-lodash,
+ libjsr311-api-java,
+ liblogback-java,
+ libservlet3.1-java,
+ libslf4j-java,
+ tomcat8,
+ ${maven:Depends},
+ ${misc:Depends},
+Recommends:
+ apache2 | httpd,
+Suggests:
+ xrdp,
+Conflicts:
+ guacamole-tomcat,
+Provides:
+ guacamole-tomcat,
+Enhances:
+ xrdp,
+Description: HTML5 web application for accessing remote desktops
+ Guacamole is an HTML5 web application that provides access to a desktop
+ environment using remote desktop protocols. A centralized server acts as a
+ tunnel and proxy, allowing access to multiple desktops through a web browser.
+ No plugins are needed: the client requires nothing more than a web browser
+ supporting HTML5 and AJAX.
+ .
+ This package contains the web application itself and depends on the
+ guacd proxy daemon, which allows communication with various backend
+ protocols. It also configures a Tomcat instance and provides web server
+ configuration for Apache.

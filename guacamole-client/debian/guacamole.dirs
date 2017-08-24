@@ -1,0 +1,4 @@
+/etc/apache2/conf-available
+/etc/guacamole
+/usr/share/guacamole
+/usr/share/java

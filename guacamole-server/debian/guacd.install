@@ -1,0 +1,3 @@
+/usr/sbin/guacd
+/usr/share/man/man8/guacd.8
+debian/guacd.service /lib/systemd/system/
