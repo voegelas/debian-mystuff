@@ -1,0 +1,7 @@
+dccd/dccd usr/sbin
+dblist/dblist usr/lib/dcc
+dbclean/dbclean usr/lib/dcc
+homedir/flod etc/dcc
+homedir/grey_flod etc/dcc
+homedir/grey_whitelist etc/dcc
+homedir/whitelist etc/dcc

@@ -1,0 +1,156 @@
+#! /bin/sh
+
+# daily DCC cron job
+
+# This script should be run daily or more often when there is a shortage
+#   of disk space to run dbclean to discard and compress old checksums.
+#   It also discards old DCC client log files.
+
+#.  By default it is installed in /usr/lib/dcc.  Instead of being copied
+#   to a directory such as /etc/cron/daily on some systems, a symbolic link
+#   should be used.
+
+# Copyright (c) 2004 by Rhyolite Software
+#
+# Permission to use, copy, modify, and distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND RHYOLITE SOFTWARE DISCLAIMS ALL
+# WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL RHYOLITE SOFTWARE
+# BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES
+# OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+# WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+# ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+# SOFTWARE.
+#	Rhyolite Software DCC 1.2.50-1.45 $Revision: 1.1 $
+#	Generated automatically from cron-dccd.in by configure.
+
+exec 1>&2 </dev/null
+
+DCC_LOGGER="logger -s -p ${DCC_ERROR_LOG_FACILITY-mail.err} -t DCC"
+DCC_HOMEDIR=/var/lib/dcc
+DEBUG=
+QUIET=-q
+# check the args once to get the home directory
+while getopts "xh:a:" c; do
+    case $c in
+	x) set -x; DEBUG=-x; QUIET=;;
+	h) DCC_HOMEDIR="$OPTARG";;
+	*) ;;
+    esac
+done
+. $DCC_HOMEDIR/dcc_conf
+# deal with bash reserved $UID and old versions of dcc_conf
+if test 0"$DCC_CONF_VERSION" -lt 2 -a -z "$DCCUID" -a ! -z "$UID"; then
+    DCCUID="$UID"
+fi
+
+USAGE="`basename $0`: [-x] [-h homedir] [-a args]"
+OPTIND=1
+while getopts "xh:a:" c; do
+    case $c in
+	x) ;;
+	h) ;;
+	a) DBCLEAN_ARGS="$DBCLEAN_ARGS $OPTARG";;
+	*) eval $DCC_LOGGER "$USAGE"; exit 1;;
+    esac
+done
+shift `expr $OPTIND - 1 || true`
+if test "$#" -ne 0; then
+    eval $DCC_LOGGER "$USAGE"
+    exit 1
+fi
+
+# make the paths absolute and trim the per day/hour/minute business
+LOGDIR=`echo $DCCM_LOGDIR						\
+	| sed -e "s@^[DHM]?@@" -e "s@^[^/]@$DCC_HOMEDIR/&@"`
+USERDIRS=`echo $DCCM_USERDIRS						\
+	| sed -e "s@^[^/]@$DCC_HOMEDIR/&@"`
+
+OARGS=64dDGNRPSVqi
+DBCLEAN_ARGS="$QUIET -h $DCC_HOMEDIR $DCC_LOG_ARGS $DBCLEAN_ARGS"
+GREY_DBCLEAN_ARGS=`echo "$DBCLEAN_ARGS"					\
+	| sed -e "s/-[eEt][ 	]*[^ 	]\{1,\}//g"			\
+	    -e "s/\(-[$OARGS]\{1,\}\)[eEt][ 	]*[^ 	]\{1,\}/\1/g"`
+
+# Removed old dccm log files.
+if test ! -z "$DBCLEAN_LOGDAYS"; then
+    if test -d "$LOGDIR"; then
+	find "$LOGDIR" -follow \( -name 'msg.*' -o -name 'tmp.*' \)	\
+		-mtime +$DBCLEAN_LOGDAYS				\
+	    | xargs /bin/rm -f
+	# remove empty subdirectories
+	find "$LOGDIR" -follow -depth -name '[0-9]*' -type d		\
+	    | xargs /bin/rmdir 2>/dev/null
+    fi
+    # clean per-user logs
+    if test "$USERDIRS" != "" -a -d "$USERDIRS"; then
+	find "$USERDIRS" -follow \( -name 'msg.*' -o -name 'tmp.*' \)	\
+		-mtime +$DBCLEAN_LOGDAYS				\
+	    | xargs /bin/rm -f
+    fi
+fi
+
+# Notify users about new log files.
+#   The file $DCC_LIBEXEC/webuser-notify must be a script that will send
+#   a suitable message.  See the example in the cgi-bin directory.
+if test "$USERDIRS" != "" -a -d "$USERDIRS"				\
+	-a -x $DCC_LIBEXEC/webuser-notify; then
+    MARKER=$USERDIRS/notify.marker
+    touch $MARKER.new
+    if test -r $MARKER; then
+	NEWER="-newer $MARKER"
+    else
+	NEWER=
+    fi
+    # Find usernames with a pending message or with a new but not newer
+    #	    than new log files
+    #	Avoid newer than new files to ensure we generate at most
+    #	    one notification per log file.
+    find "$USERDIRS" -follow \( -name notify.pending			\
+	    -o \( -name 'msg.*' $NEWER \) \) ! -newer $MARKER.new	\
+	| sed -n -e 's@.*/\([^/]*/[^/]*\)/log/msg\.[^/]*$@\1@p'		\
+		-e 's@.*/\([^/]*/[^/]*\)/notify.pending$@\1@p'		\
+	| sort -u							\
+	| $DCC_LIBEXEC/webuser-notify $DEBUG -d "$USERDIRS"
+
+    mv -f $MARKER.new $MARKER
+fi
+
+
+# trim the greylist database
+case X"$GREY_ENABLE" in
+    [oO][nN]) 
+	GREY_ENABLE=on
+	;;
+    X)
+	if test ! -z "$GREY_CLIENT_ARGS"; then
+	    GREY_ENABLE=on
+	fi
+	;;
+esac
+if test ! -z "$GREY_SRVR_ID" -a "$GREY_ENABLE" = on; then
+    SADDR=`expr "X$GREY_DCCD_ARGS" : ".*-[$OARGS]*a[	 ]*\([^	 ]*\).*"`
+    if test ! -z "$SADDR"; then
+	SADDR="-a $SADDR"
+    fi
+    $DCC_LIBEXEC/dbclean -Gon -i $GREY_SRVR_ID $SADDR $GREY_DBCLEAN_ARGS
+fi
+
+
+# Delete old checksums from the dccd database if it seems dccd can run.
+#	For historical reasons, SRVR_ID set and DCCD_ENABLE nul
+#	turns on dccd
+case "$DCCD_ENABLE" in
+    [oO][fF][fF]) DCCD_ENABLE=off;;
+    *) DCCD_ENABLE=on;;
+esac
+if test ! -z "$SRVR_ID" -a "$DCCD_ENABLE" = on; then
+    SADDR=`expr "X$DCCD_ARGS" : ".*-[$OARGS]*a[	 ]*\([^	 ]*\).*"`
+    if test ! -z "$SADDR"; then
+	SADDR="-a $SADDR"
+    fi
+    $DCC_LIBEXEC/dbclean -i $SRVR_ID $SADDR $DBCLEAN_ARGS
+fi

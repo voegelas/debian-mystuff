@@ -1,0 +1,51 @@
+#!/bin/sh
+#
+# dcc-server	example file to build /etc/init.d/ scripts.
+#		This file should be used to construct scripts for /etc/init.d.
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/dccd
+NAME=dcc-server
+DESC="Distributed Checksum Clearinghouse server"
+
+test -f $DAEMON || exit 0
+
+if [ -f /etc/default/dcc-server ]; then
+	. /etc/default/dcc-server
+else
+	echo "Missing file /etc/default/dcc-server"
+	exit 1
+fi
+
+set -e
+
+case "$1" in
+  start)
+	echo -n "Starting $DESC: $NAME"
+	start-stop-daemon --start --quiet --pidfile /var/run/$NAME.pid \
+		--chuid dcc:dcc --exec $DAEMON -- $OPTIONS
+	echo "."
+	;;
+  stop)
+	echo -n "Stopping $DESC: $NAME"
+	start-stop-daemon --oknodo --stop --quiet --exec $DAEMON
+	echo "."
+	;;
+  restart)
+	echo -n "Restarting $DESC: $NAME"
+	start-stop-daemon --stop --quiet --pidfile \
+		/var/run/$NAME.pid --exec $DAEMON
+	sleep 1
+	start-stop-daemon --start --quiet --pidfile \
+		/var/run/$NAME.pid --exec $DAEMON -- $OPTIONS
+	echo "."
+	;;
+  *)
+	N=/etc/init.d/$NAME
+	# echo "Usage: $N {start|stop|restart|reload|force-reload}" >&2
+	echo "Usage: $N {start|stop|restart}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

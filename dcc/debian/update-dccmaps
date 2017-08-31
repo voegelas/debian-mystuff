@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# (c) 2004 by Martin Zobel-Helas
+# this piece of code is published under the
+# GNU General Public License
+
+
+set -e
+echo -n "Updating DCC map"
+if [ -e /etc/dcc/map.txt ]; then
+	if [ -e /var/lib/dcc/map ]; then
+		rm -f /var/lib/dcc/map
+		/usr/bin/cdcc -qh /var/lib/dcc 'new map; load -; info' < /etc/dcc/map.txt > /dev/null
+		chown dcc:dcc /var/lib/dcc/map
+		chmod 0600 /var/lib/dcc/map
+	else
+		/usr/bin/cdcc -qh /var/lib/dcc 'new map; load -; info' < /etc/dcc/map.txt > /dev/null
+		chown dcc:dcc /var/lib/dcc/map
+		chmod 0600 /var/lib/dcc/map
+	fi
+fi
+echo "."

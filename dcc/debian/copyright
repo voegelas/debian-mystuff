@@ -1,0 +1,38 @@
+This package was debianized by Martin Zobel-Helas <mhelas@helas.net> on
+Fri,  9 Jan 2004 02:44:03 +0100.  This package is maintained 
+by Martin Zobel-Helas <mhelas@helas.net>.
+
+The packaging is licensed under the GPL found in 
+/usr/share/common-licenses/GPL.
+
+It was downloaded from http://www.dcc-servers.net/dcc/source/dcc-dccd.tar.Z
+
+Upstream Author: 
+Rhyolite Software, http://www.rhyolite.com/
+
+Copyright:
+ * Distributed Checksum Clearinghouse
+ *
+ * Copyright (c) 2005 by Rhyolite Software
+ *
+ * Permission to use, copy, modify, and distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND RHYOLITE SOFTWARE DISCLAIMS ALL
+ * WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL RHYOLITE SOFTWARE
+ * BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES
+ * OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+ * WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ * ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+ * SOFTWARE.
+
+
+ * Some parts including dcclib/getopt.c and include/sendmail-sysexits.h
+ * Copyright (c) 1987, 1993, 1994
+ *      The Regents of the University of California.  All rights reserved.
+
+ * Some other parts including dcclib/inet_ntop.c
+ * Copyright (c) 1996-1999 by Internet Software Consortium.
+

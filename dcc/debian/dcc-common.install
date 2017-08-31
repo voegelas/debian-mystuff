@@ -1,0 +1,7 @@
+dccsight/dccsight usr/bin
+cdcc/cdcc usr/bin
+homedir/whiteclnt etc/dcc
+homedir/whitecommon etc/dcc
+debian/update-dccmaps usr/sbin
+homedir/ids /usr/share/dcc
+homedir/map.txt /usr/share/dcc

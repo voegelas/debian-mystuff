@@ -1,0 +1,4 @@
+etc/dcc/ids		var/lib/dcc/ids
+etc/dcc/map.txt		var/lib/dcc/map.txt
+etc/dcc/whitecommon	var/lib/dcc/whitecommon
+

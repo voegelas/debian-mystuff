@@ -1,0 +1,37 @@
+#!/usr/bin/make -f
+# Copyright Dan Weber <dan@mirrorlynx.com> GPL 2004
+# modified by Martin Zobel-Helas <mhelas@helas.net> 2004
+
+include /usr/share/cdbs/1/rules/simple-patchsys.mk
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/autotools.mk
+
+export DH_VERBOSE=1
+
+clean::
+	find . -iname \*.in | sed -e "s/\.in$$//" | xargs rm -f
+
+DEB_CONFIGURE_NORMAL_ARGS :=  --libexecdir=/usr/lib/dcc
+
+DEB_CONFIGURE_EXTRA_FLAGS := --mandir=/usr/share/man \
+             --with-rundir=/var/run/dcc \
+             --homedir=/var/lib/dcc \
+             --with-uid=dcc
+
+DEB_MAKE_CLEAN_TARGET := clean
+
+DEB_MAKE_INSTALL_TARGET := 
+
+binary-post-install/dcc-client::
+	rm -rf debian/dcc-client/usr/share/doc/dcc-client/ 
+	dh_link -pdcc-client usr/share/doc/dcc-common usr/share/doc/dcc-client
+
+binary-post-install/dcc-server::
+	rm -rf debian/dcc-server/usr/share/doc/dcc-server/ 
+	dh_link -pdcc-server usr/share/doc/dcc-common usr/share/doc/dcc-server
+
+binary-post-install/dcc-milter::
+	mv debian/dcc-milter/usr/bin/dccm debian/dcc-milter/usr/bin/dcc-milter
+	mv debian/dcc-milter/usr/share/man/man8/dccm.8 debian/dcc-milter/usr/share/man/man8/dcc-milter.8
+	rm -rf debian/dcc-milter/usr/share/doc/dcc-milter/ 
+	dh_link -pdcc-milter usr/share/doc/dcc-common usr/share/doc/dcc-milter

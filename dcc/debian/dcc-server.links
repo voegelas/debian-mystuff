@@ -1,0 +1,6 @@
+etc/dcc/whitelist	var/lib/dcc/whitelist
+etc/dcc/flod		var/lib/dcc/flod
+etc/dcc/grey_whitelist	var/lib/dcc/grey_whitelist
+etc/dcc/grey_flod	var/lib/dcc/grey_flod
+etc/default/dcc-server	etc/dcc/dcc_conf
+etc/default/dcc-server  var/lib/dcc/dcc_conf
