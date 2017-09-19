@@ -1,3 +1,17 @@
+guacamole-auth-pam (0.9.14-1) unstable; urgency=medium
+
+  * Updated for version 0.9.14.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Thu, 25 Jan 2018 05:56:39 +0100
+
+guacamole-auth-pam (0.9.13-2) unstable; urgency=low
+
+  * The "tomcat8" user needs to be manually added to the "shadow" group if
+    users are authenticated with pam_unix(8).
+  * A warning is logged if no Guacamole configuration is assigned to a user.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Fri, 03 Nov 2017 21:03:39 +0100
+
 guacamole-auth-pam (0.9.13-1) unstable; urgency=medium
 
   * Initial release.

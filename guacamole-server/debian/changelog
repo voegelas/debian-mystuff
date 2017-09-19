@@ -1,3 +1,16 @@
+guacamole-server (0.9.14-1) unstable; urgency=medium
+
+  * Updated for version 0.9.14.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Thu, 25 Jan 2018 06:06:29 +0100
+
+guacamole-server (0.9.13-2) unstable; urgency=medium
+
+  * The recommendations and suggestions are now versioned.
+  * The build depends on dh-systemd.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Fri, 03 Nov 2017 17:41:31 +0100
+
 guacamole-server (0.9.13-1) unstable; urgency=medium
 
   * Updated for version 0.9.13.

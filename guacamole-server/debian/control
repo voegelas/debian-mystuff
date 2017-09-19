@@ -9,6 +9,7 @@ Build-Depends:
  libtool,
  autotools-dev,
  debhelper (>= 9),
+ dh-systemd,
  libavcodec-dev,
  libavutil-dev,
  libcairo-dev,
@@ -27,7 +28,7 @@ Build-Depends:
  pkg-config,
 Standards-Version: 3.9.6
 Section: net
-Homepage: https://guacamole.incubator.apache.org/
+Homepage: https://guacamole.apache.org/
 
 Package: libguac-dev
 Section: libdevel
@@ -54,11 +55,11 @@ Depends:
  ${misc:Depends},
  ${shlibs:Depends},
 Recommends:
- libguac-client-rdp0,
- libguac-client-ssh0,
- libguac-client-vnc0,
+ libguac-client-rdp0 (= ${binary:Version}),
+ libguac-client-ssh0 (= ${binary:Version}),
+ libguac-client-vnc0 (= ${binary:Version}),
 Suggests:
- libguac-client-telnet0,
+ libguac-client-telnet0 (= ${binary:Version}),
 Description: HTML5 web application for accessing remote desktops (proxy daemon)
  Guacamole is an HTML5 web application that provides access to a desktop
  environment using remote desktop protocols. A centralized server acts as a

@@ -1,3 +1,2 @@
 /etc/guacamole/apache.conf /etc/apache2/conf-available/guacamole.conf
 /etc/guacamole/tomcat.xml /etc/tomcat8/Catalina/localhost/guacamole.xml
-/etc/guacamole /usr/share/tomcat8/.guacamole

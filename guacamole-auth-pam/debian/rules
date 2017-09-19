@@ -1,18 +1,18 @@
 #!/usr/bin/make -f
 
 PRGNAM = guacamole-auth-pam
-VERSION ?= $(shell dpkg-parsechangelog -S Version | cut -d - -f 1)
-DOWNLOAD ?= https://github.com/voegelas/guacamole-auth-pam/releases/download/v1.0/guacamole-auth-pam-$(VERSION)-incubating.jar
+VERSION ?= $(shell dpkg-parsechangelog --show-field Version | cut -d - -f 1)
+DOWNLOAD ?= https://github.com/voegelas/guacamole-auth-pam/releases/download/v1.2/guacamole-auth-pam-$(VERSION).jar
 
 %:
-	dh $@ 
+	dh $@
 
 override_dh_install:
 	dh_install
 
-	cp guacamole-auth-pam-$(VERSION)-incubating.jar debian/guacamole-auth-pam/usr/share/guacamole/guacamole/WEB-INF/lib/
-	ln -s ../../../usr/share/guacamole/guacamole/WEB-INF/lib/guacamole-auth-pam-$(VERSION)-incubating.jar debian/guacamole-auth-pam/etc/guacamole/extensions/
+	cp guacamole-auth-pam-$(VERSION).jar debian/guacamole-auth-pam/usr/share/guacamole/guacamole/WEB-INF/lib/
+	ln -s ../../../usr/share/guacamole/guacamole/WEB-INF/lib/guacamole-auth-pam-$(VERSION).jar debian/guacamole-auth-pam/etc/guacamole/extensions/
 
 get-orig-source:
-	curl -OL $(DOWNLOAD)
+	curl -L -O $(DOWNLOAD)
 	cd .. && tar --exclude=debian -chzf $(PRGNAM)_$(VERSION).orig.tar.gz $(PRGNAM)-$(VERSION)

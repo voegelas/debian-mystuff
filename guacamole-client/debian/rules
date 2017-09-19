@@ -1,9 +1,9 @@
 #!/usr/bin/make -f
 
 PRGNAM = guacamole-client
-VERSION ?= $(shell dpkg-parsechangelog -S Version | cut -d - -f 1)
-MIRROR ?= http://ftp-stud.hs-esslingen.de/pub/Mirrors/ftp.apache.org/dist/
-DOWNLOAD ?= $(MIRROR)/incubator/guacamole/$(VERSION)-incubating/binary/guacamole-$(VERSION)-incubating.war
+VERSION ?= $(shell dpkg-parsechangelog --show-field Version | cut -d - -f 1)
+MIRROR ?= http://ftp-stud.hs-esslingen.de/pub/Mirrors/ftp.apache.org/dist
+DOWNLOAD ?= $(MIRROR)/guacamole/$(VERSION)/binary/guacamole-$(VERSION).war
 
 %:
 	dh $@ 
@@ -15,5 +15,5 @@ override_dh_install:
 	unzip guacamole.war -d debian/guacamole/usr/share/guacamole/guacamole
 
 get-orig-source:
-	curl -o guacamole.war $(DOWNLOAD)
+	curl -L -o guacamole.war $(DOWNLOAD)
 	cd .. && tar --exclude=debian -chzf $(PRGNAM)_$(VERSION).orig.tar.gz $(PRGNAM)-$(VERSION)

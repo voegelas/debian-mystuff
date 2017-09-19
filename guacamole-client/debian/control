@@ -10,13 +10,12 @@ Build-Depends:
  unzip,
 Standards-Version: 3.9.6
 Section: net
-Homepage: https://guacamole.incubator.apache.org/
+Homepage: https://guacamole.apache.org/
 
 Package: guacamole
 Architecture: all
 Depends:
- debconf,
- guacd,
+ guacd (>= ${source:Upstream-Version}),
  tomcat8,
  ${misc:Depends},
 Recommends:

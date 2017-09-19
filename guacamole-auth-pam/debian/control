@@ -9,7 +9,7 @@ Homepage: https://github.com/voegelas/guacamole-auth-pam
 Package: guacamole-auth-pam
 Architecture: all
 Depends:
- guacamole (>= 0.9.13), guacamole (<< 0.9.14),
+ guacamole (>= 0.9.14), guacamole (<< 0.9.15),
  ${misc:Depends},
 Description: PAM authentication for Guacamole
  This Guacamole extension authenticates users with PAM.
