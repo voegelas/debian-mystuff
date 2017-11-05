@@ -1,0 +1,7 @@
+nginx-auth-saslauthd for Debian
+-------------------------------
+
+Enable the saslauthd daemon in /etc/default/saslauthd.  Read the manual page
+nginx-auth-saslauthd(8) and the auth_request directive's documentation at
+https://nginx.org/en/docs/http/ngx_http_auth_request_module.html for
+information on how to configure nginx.

@@ -1,0 +1,73 @@
+nginx-auth-saslauthd (1.001-3) unstable; urgency=low
+
+  * Listen on /run/nginx-auth/http.sock instead of http://localhost:8008.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Wed, 20 Jan 2021 19:26:16 +0100
+
+nginx-auth-saslauthd (1.001-2) unstable; urgency=low
+
+  * Use localhost instead of 127.0.0.1.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Wed, 20 Jan 2021 16:55:43 +0100
+
+nginx-auth-saslauthd (1.001-1) unstable; urgency=low
+
+  * Get the source code from GitLab.com.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Wed, 20 Jan 2021 10:36:48 +0100
+
+nginx-auth-saslauthd (1.000-1) unstable; urgency=low
+
+  * Handle undefined reply from saslauthd.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Sun, 15 Sep 2019 15:28:43 +0200
+
+nginx-auth-saslauthd (0.008-2) unstable; urgency=low
+
+  * Reject empty passwords and login names.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Thu, 08 Nov 2018 11:22:50 +0100
+
+nginx-auth-saslauthd (0.007-1) unstable; urgency=low
+
+  * Support Latin-1 encoded credentials.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Tue, 25 Sep 2018 23:39:08 +0200
+
+nginx-auth-saslauthd (0.006-1) unstable; urgency=low
+
+  * Read the configuration from a file.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Sun, 23 Sep 2018 09:01:08 +0200
+
+nginx-auth-saslauthd (0.005-1) unstable; urgency=low
+
+  * Prepare for a possible CPAN release.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Sat, 25 Nov 2017 12:25:16 +0100
+
+nginx-auth-saslauthd (0.004-1) unstable; urgency=low
+
+  * Accumulate the saslauthd daemon's reply.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Tue, 14 Nov 2017 05:42:28 +0100
+
+nginx-auth-saslauthd (0.003-1) unstable; urgency=low
+
+  * Ask the client to encode the credentials in UTF-8.
+  * Encode the SASL realm and service in UTF-8.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Wed, 08 Nov 2017 08:24:00 +0100
+
+nginx-auth-saslauthd (0.002-1) unstable; urgency=low
+
+  * Check whether the HTTP connection has been closed early.
+  * Raise the default saslauthd timeout from 5 to 10 seconds.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Tue, 07 Nov 2017 09:27:32 +0100
+
+nginx-auth-saslauthd (0.001-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Sun, 05 Nov 2017 15:09:00 +0100
