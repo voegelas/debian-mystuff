@@ -7,18 +7,18 @@ Description: Build system fixes
  6. Clean up linking of shared libraries.
 Author: Dominik George <nik@naturalnet.de>
 diff -ur a/configure.ac b/configure.ac
---- a/configure.ac	2018-01-09 04:14:10.000000000 +0100
-+++ b/configure.ac	2018-01-25 06:59:05.815881858 +0100
+--- a/configure.ac	2018-12-21 22:17:27.000000000 +0100
++++ b/configure.ac	2019-02-01 15:51:23.485782297 +0100
 @@ -19,7 +19,7 @@
  
  AC_PREREQ([2.61])
- AC_INIT([guacamole-server], [0.9.14])
+ AC_INIT([guacamole-server], [1.0.0])
 -AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects])
 +AM_INIT_AUTOMAKE([-Wall foreign subdir-objects])
  AM_SILENT_RULES([yes])
  
  LT_PREREQ([2.2])
-@@ -526,9 +526,9 @@
+@@ -534,9 +534,9 @@
  
      # libfreerdp-core / libfreerdp
      AC_CHECK_LIB([freerdp-core], [freerdp_new],
@@ -30,7 +30,7 @@ diff -ur a/configure.ac b/configure.ac
                                 [AC_MSG_WARN([
    --------------------------------------------
     Unable to find libfreerdp-core / libfreerdp
-@@ -1065,13 +1065,14 @@
+@@ -1073,13 +1073,14 @@
      AC_CHECK_LIB([ssh2], [gcry_control],
                           [AC_CHECK_HEADER(gcrypt.h,
                                            [AC_DEFINE([LIBSSH2_USES_GCRYPT],,
@@ -48,8 +48,8 @@ diff -ur a/configure.ac b/configure.ac
  fi
  
 diff -ur a/src/common/Makefile.am b/src/common/Makefile.am
---- a/src/common/Makefile.am	2017-09-22 22:21:12.000000000 +0200
-+++ b/src/common/Makefile.am	2018-01-25 07:28:35.523841999 +0100
+--- a/src/common/Makefile.am	2018-12-21 22:17:27.000000000 +0100
++++ b/src/common/Makefile.am	2019-02-01 15:51:23.485782297 +0100
 @@ -57,7 +57,7 @@
      surface.c
  
@@ -60,8 +60,8 @@ diff -ur a/src/common/Makefile.am b/src/common/Makefile.am
  
  libguac_common_la_LIBADD = \
 diff -ur a/src/common-ssh/Makefile.am b/src/common-ssh/Makefile.am
---- a/src/common-ssh/Makefile.am	2017-09-22 22:21:12.000000000 +0200
-+++ b/src/common-ssh/Makefile.am	2018-01-25 06:58:37.901781712 +0100
+--- a/src/common-ssh/Makefile.am	2018-12-21 22:17:27.000000000 +0100
++++ b/src/common-ssh/Makefile.am	2019-02-01 15:51:23.486782297 +0100
 @@ -41,14 +41,12 @@
      common-ssh/user.h
  
@@ -80,9 +80,9 @@ diff -ur a/src/common-ssh/Makefile.am b/src/common-ssh/Makefile.am
      @SSH_LIBS@                  \
      @SSL_LIBS@
 diff -ur a/src/guacd/Makefile.am b/src/guacd/Makefile.am
---- a/src/guacd/Makefile.am	2018-01-09 04:14:10.000000000 +0100
-+++ b/src/guacd/Makefile.am	2018-01-25 07:00:57.785280241 +0100
-@@ -47,16 +47,14 @@
+--- a/src/guacd/Makefile.am	2018-12-21 22:17:27.000000000 +0100
++++ b/src/guacd/Makefile.am	2019-02-01 15:51:23.486782297 +0100
+@@ -48,16 +48,14 @@
      proc-map.c
  
  guacd_CFLAGS =              \
@@ -103,8 +103,8 @@ diff -ur a/src/guacd/Makefile.am b/src/guacd/Makefile.am
  
  EXTRA_DIST =            \
 diff -ur a/src/libguac/Makefile.am b/src/libguac/Makefile.am
---- a/src/libguac/Makefile.am	2018-01-09 04:14:10.000000000 +0100
-+++ b/src/libguac/Makefile.am	2018-01-25 07:03:51.707889014 +0100
+--- a/src/libguac/Makefile.am	2018-12-21 22:17:27.000000000 +0100
++++ b/src/libguac/Makefile.am	2019-02-01 15:51:23.486782297 +0100
 @@ -115,11 +115,13 @@
  endif
  
@@ -113,7 +113,7 @@ diff -ur a/src/libguac/Makefile.am b/src/libguac/Makefile.am
 +    -Wall -I$(srcdir)/guacamole
  
  libguac_la_LDFLAGS =     \
-     -version-info 15:0:3 \
+     -version-info 16:0:0 \
 -    -no-undefined        \
 +    -no-undefined
 +
@@ -122,9 +122,9 @@ diff -ur a/src/libguac/Makefile.am b/src/libguac/Makefile.am
      @DL_LIBS@            \
      @JPEG_LIBS@          \
 diff -ur a/src/protocols/rdp/Makefile.am b/src/protocols/rdp/Makefile.am
---- a/src/protocols/rdp/Makefile.am	2018-01-09 04:14:02.000000000 +0100
-+++ b/src/protocols/rdp/Makefile.am	2018-01-25 07:13:31.308871454 +0100
-@@ -138,96 +138,100 @@
+--- a/src/protocols/rdp/Makefile.am	2018-12-21 22:17:27.000000000 +0100
++++ b/src/protocols/rdp/Makefile.am	2019-02-01 15:51:23.487782296 +0100
+@@ -140,96 +140,100 @@
  #
  
  libguac_client_rdp_la_CFLAGS = \
@@ -254,9 +254,9 @@ diff -ur a/src/protocols/rdp/Makefile.am b/src/protocols/rdp/Makefile.am
  #
  # Optional SFTP support
 diff -ur a/src/protocols/ssh/Makefile.am b/src/protocols/ssh/Makefile.am
---- a/src/protocols/ssh/Makefile.am	2017-09-13 00:32:40.000000000 +0200
-+++ b/src/protocols/ssh/Makefile.am	2018-01-25 07:14:27.103057996 +0100
-@@ -47,7 +47,7 @@
+--- a/src/protocols/ssh/Makefile.am	2018-12-21 22:17:27.000000000 +0100
++++ b/src/protocols/ssh/Makefile.am	2019-02-01 15:51:23.487782296 +0100
+@@ -49,7 +49,7 @@
  endif
  
  libguac_client_ssh_la_CFLAGS = \
@@ -265,7 +265,7 @@ diff -ur a/src/protocols/ssh/Makefile.am b/src/protocols/ssh/Makefile.am
      @COMMON_SSH_INCLUDE@       \
      @LIBGUAC_INCLUDE@          \
      @TERMINAL_INCLUDE@
-@@ -56,11 +56,11 @@
+@@ -58,11 +58,11 @@
      @COMMON_LTLIB@             \
      @COMMON_SSH_LTLIB@         \
      @LIBGUAC_LTLIB@            \
@@ -283,8 +283,8 @@ diff -ur a/src/protocols/ssh/Makefile.am b/src/protocols/ssh/Makefile.am
 +    -version-info 0:0:0
  
 diff -ur a/src/protocols/telnet/Makefile.am b/src/protocols/telnet/Makefile.am
---- a/src/protocols/telnet/Makefile.am	2017-09-13 00:32:40.000000000 +0200
-+++ b/src/protocols/telnet/Makefile.am	2018-01-25 07:15:09.830200223 +0100
+--- a/src/protocols/telnet/Makefile.am	2018-12-21 22:17:27.000000000 +0100
++++ b/src/protocols/telnet/Makefile.am	2019-02-01 15:51:23.488782296 +0100
 @@ -39,17 +39,17 @@
      user.h
  
@@ -309,8 +309,8 @@ diff -ur a/src/protocols/telnet/Makefile.am b/src/protocols/telnet/Makefile.am
 +    -version-info 0:0:0
  
 diff -ur a/src/protocols/vnc/Makefile.am b/src/protocols/vnc/Makefile.am
---- a/src/protocols/vnc/Makefile.am	2017-09-22 22:21:12.000000000 +0200
-+++ b/src/protocols/vnc/Makefile.am	2018-01-25 07:16:04.504381438 +0100
+--- a/src/protocols/vnc/Makefile.am	2018-12-21 22:17:27.000000000 +0100
++++ b/src/protocols/vnc/Makefile.am	2019-02-01 15:51:23.488782296 +0100
 @@ -47,20 +47,20 @@
      vnc.h
  
@@ -338,8 +338,8 @@ diff -ur a/src/protocols/vnc/Makefile.am b/src/protocols/vnc/Makefile.am
  # Optional SFTP support
  if ENABLE_COMMON_SSH
 diff -ur a/src/pulse/Makefile.am b/src/pulse/Makefile.am
---- a/src/pulse/Makefile.am	2017-09-22 22:21:12.000000000 +0200
-+++ b/src/pulse/Makefile.am	2018-01-25 07:18:26.485848123 +0100
+--- a/src/pulse/Makefile.am	2018-12-21 22:17:27.000000000 +0100
++++ b/src/pulse/Makefile.am	2019-02-01 15:51:23.488782296 +0100
 @@ -29,12 +29,10 @@
      pulse.c
  
@@ -356,8 +356,8 @@ diff -ur a/src/pulse/Makefile.am b/src/pulse/Makefile.am
      @PULSE_LIBS@
  
 diff -ur a/src/terminal/Makefile.am b/src/terminal/Makefile.am
---- a/src/terminal/Makefile.am	2017-09-22 22:21:12.000000000 +0200
-+++ b/src/terminal/Makefile.am	2018-01-25 07:19:15.473007882 +0100
+--- a/src/terminal/Makefile.am	2018-12-21 22:17:27.000000000 +0100
++++ b/src/terminal/Makefile.am	2019-02-01 15:51:23.489782295 +0100
 @@ -50,16 +50,14 @@
      xparsecolor.c
  
@@ -378,8 +378,8 @@ diff -ur a/src/terminal/Makefile.am b/src/terminal/Makefile.am
      @MATH_LIBS@               \
      @PANGO_LIBS@              \
 diff -ur a/tests/Makefile.am b/tests/Makefile.am
---- a/tests/Makefile.am	2017-09-13 00:32:40.000000000 +0200
-+++ b/tests/Makefile.am	2018-01-25 07:19:52.880129456 +0100
+--- a/tests/Makefile.am	2018-12-21 22:17:27.000000000 +0100
++++ b/tests/Makefile.am	2019-02-01 15:51:23.489782295 +0100
 @@ -49,7 +49,7 @@
      util/guac_unicode.c
  

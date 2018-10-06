@@ -35,7 +35,7 @@ Section: libdevel
 Architecture: any
 Multi-Arch: same
 Depends:
- libguac12 (= ${binary:Version}),
+ libguac16 (= ${binary:Version}),
  ${misc:Depends},
 Replaces:
  libguac1-dev,
@@ -178,7 +178,7 @@ Description: HTML5 web application for accessing remote desktops (Telnet support
  .
  This package contains protocol support for Telnet backends.
 
-Package: libguac12
+Package: libguac16
 Section: libs
 Architecture: any
 Multi-Arch: same

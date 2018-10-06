@@ -2,7 +2,7 @@
 
 PRGNAM = guacamole-auth-pam
 VERSION ?= $(shell dpkg-parsechangelog --show-field Version | cut -d - -f 1)
-DOWNLOAD ?= https://github.com/voegelas/guacamole-auth-pam/releases/download/v1.2/guacamole-auth-pam-$(VERSION).jar
+DOWNLOAD ?= https://github.com/voegelas/guacamole-auth-pam/releases/download/v1.4/guacamole-auth-pam-$(VERSION).jar
 
 %:
 	dh $@

@@ -2,6 +2,6 @@ guacamole-auth-pam for Debian
 -----------------------------
 
 Add the Tomcat user to the "shadow" group if the Guacamole users are
-authenticated with pam_unix(8):
+authenticated with pam_unix(8), i.e. your local shadow password file:
 
     usermod -a -G shadow tomcat8

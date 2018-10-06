@@ -2,9 +2,9 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Source: https://github.com/voegelas/guacamole-auth-pam
 
 Files: *
-Copyright: 2017 Andreas Voegele
+Copyright: 2017-2018 Andreas Voegele
 License: Apache-2.0
 
 Files: debian/*
-Copyright: 2017 Andreas Voegele
+Copyright: 2017-2018 Andreas Voegele
 License: AGPL-3.0

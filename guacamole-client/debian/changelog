@@ -1,3 +1,9 @@
+guacamole-client (1.0.0-1) unstable; urgency=medium
+
+  * Updated for version 1.0.0.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Fri, 01 Feb 2019 15:30:47 +0100
+
 guacamole-client (0.9.14-1) unstable; urgency=medium
 
   * Updated for version 0.9.14.
