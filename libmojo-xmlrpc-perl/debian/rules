@@ -11,3 +11,4 @@ DOWNLOAD ?= $(MIRROR)/authors/id/J/JB/JBERGER/Mojo-XMLRPC-$(VERSION).tar.gz
 get-orig-source:
 	curl -L $(DOWNLOAD) | tar --strip-components=1 -xzf -
 	cd .. && tar --exclude=debian -chzf $(PRGNAM)_$(VERSION).orig.tar.gz $(PRGNAM)-$(VERSION)
+	patch -p1 <debian/patches/parse-datetime.patch
