@@ -1,11 +1,5 @@
-libmojo-xmlrpc-perl (0.05-2) unstable; urgency=low
+libmojo-xmlrpc-perl (0.06-1) unstable; urgency=low
 
-  * Fix date and time parsing.
+  * Updated for version 0.06.
 
- -- Andreas Voegele <andreas@andreasvoegele.com>  Sun, 16 Dec 2018 05:17:24 +0100
-
-libmojo-xmlrpc-perl (0.05-1) unstable; urgency=low
-
-  * Updated for version 0.05.
-
- -- Andreas Voegele <andreas@andreasvoegele.com>  Wed, 04 Jul 2018 13:31:26 +0200
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Sun, 16 Dec 2018 07:59:40 +0100
