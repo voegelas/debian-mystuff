@@ -21,7 +21,7 @@ set -e
 case "$1" in
        purge)
 
-	rm -rf /var/log/dcc /var/lib/dcc/log /var/lib/dcc/map /var/lib/dcc/map.txt /var/lib/dcc/ids /etc/dcc /var/lib/dcc/whiteclnt /var/lib/dcc /var/run/dcc
+	rm -rf /etc/dcc /var/lib/dcc
 
         if getent passwd dcc >/dev/null; then
                 userdel dcc || echo "dcc: Could not remove dcc user" >&2

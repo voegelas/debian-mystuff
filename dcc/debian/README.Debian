@@ -1,37 +1,20 @@
 dcc for Debian
 --------------
 
-To use DCC, you can either run it from procmail, from spamassassin or within
-sendmail by using the milterinterface. To use it with procmail, just put 
+To use DCC from SpamAssassin enable the DCC plugin in
+/etc/spamassassin/v310.pre.
 
-    :0fw : /tmp/.lock.dcc.$LOGNAME
-    | /usr/bin/dccproc
+If you use Exim, you can append -SX-Envelope-From to DCCM_ARGS and
+DCCIFD_ARGS in /etc/dcc/dcc_conf and use the X-Envelope-From header in
+/etc/dcc/whiteclnt in order to whitelist senders. Example:
 
-in your ~/.procmailrc, and extra headers will be added  in the mails 
-in your mailbox.
-
-If you want to use it with spamassassin, add 
-
-    use_dcc                 1
-
-to your ~/.spamassassin/user_prefs file. Spamassassin will now perform some
-extra online check using one of the public DCC servers.
-
-To use DCC within sendmail, you have to use dccm, which is supplied from the
-dcc-milter package. dcc-milter also includes some m4-file for
-sendmail-configuration. dcc-milter is now run by default, so please enable it in
-/etc/default/dcc-milter.
-
-If you want to whitelist debian mailinglists, please run 
-/usr/share/doc/dcc-common/debian-whitelist.sh, copy resulting file
-whitelist.debian to /etc/dcc and modify /etc/dcc/whitelist to include
-whitelist.debian.
+    ok      substitute X-Envelope-From <someone@example.com>
 
 DCC requires open firewall ports 6277 udp for incoming and outgoing. For
 further documentation about firewalling please also look at
-    http://www.dcc-servers.net/dcc/dcc-tree/FAQ.html#firewall-ports
+    https://www.dcc-servers.net/dcc/dcc-tree/FAQ.html#firewall-ports
 and 
-    http://www.rhyolite.com/anti-spam/dcc/firewall.html
+    https://www.rhyolite.com/dcc/firewall.html
 
 For further documentation, please read dcc (8) man page.
 

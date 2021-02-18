@@ -44,59 +44,60 @@ case "$1" in
 		usermod -s "/bin/false"            dcc
 	fi
 		
-
-
-	
-    	PASSWD1=`ps|cksum|tr '        ' 'xy'`
-	PASSWD2=`ps|cksum|tr '        ' 'xy'`
-    	if ! [ -d /var/log/dcc ]; then
-		mkdir -p /var/log/dcc
-		ln -s /var/log/dcc /var/lib/dcc/log
+	if [ -x /usr/bin/cdcc ]; then
+		chown dcc:dcc /usr/bin/cdcc
+		chmod 04755 /usr/bin/cdcc
 	fi
 
+	if [ -x /usr/lib/dcc/dccsight ]; then
+		chown dcc:dcc /usr/lib/dcc/dccsight
+		chmod 04755 /usr/lib/dcc/dccsight
+	fi
+
+	if [ -x /usr/bin/dccproc ]; then
+		chown dcc:dcc /usr/bin/dccproc
+		chmod 04755 /usr/bin/dccproc
+	fi
+
+	if [ -d /var/lib/dcc ]; then
+		chown dcc:dcc /var/lib/dcc
+	fi
+
+	if ! [ -d /var/lib/dcc/log ]; then
+		rm -f /var/lib/dcc/log
+		mkdir -p /var/lib/dcc/log
+	fi
+
+	if [ -d /var/lib/dcc/log ]; then
+		chmod 0710 /var/lib/dcc/log
+		chown dcc:dcc /var/lib/dcc/log
+	fi
+
+	PASSWD1=`(ps; date; dd if=/dev/urandom count=1 2>&1 || true) | cksum | tr '	 ' xy`
+	PASSWD2=`(echo "$PASSWD1"; ps; date; dd if=/dev/urandom count=1 2>&1 || true) | cksum | tr '	 ' xy`
 	if ! [ -f /etc/dcc/ids ]; then
-		sed -e "s/secret1/$PASSWD1/" -e "s/secret2/$PASSWD2/" /usr/share/dcc/ids > /etc/dcc/ids
+		sed -e "/^[^#]/s/secret1[0-9a-z]*/secret1$PASSWD1/" -e "/^[^#]/s/secret2[0-9a-z]*/secret2$PASSWD2/" /usr/share/dcc/ids > /etc/dcc/ids
 		chmod 0600 /etc/dcc/ids
 		chown dcc:dcc /etc/dcc/ids
 	fi
 
 	if ! [ -f /etc/dcc/map.txt ]; then
-		sed -e "s/secret1/$PASSWD1/" /usr/share/dcc/map.txt > /etc/dcc/map.txt
-		/usr/sbin/update-dccmaps
-		chmod 0600 /etc/dcc/map.txt /var/lib/dcc/map
-		chown dcc:dcc /var/lib/dcc/map /etc/dcc/map.txt
-	fi
-
-	if [ `stat -c%U /var/lib/dcc/map` != "dcc" ] || [ `stat -c%G /var/lib/dcc/map` != "dcc" ]; then 
-		chown dcc:dcc /var/lib/dcc/map
+		sed -e "/^[^#]/s/secret1[0-9a-z]*/secret1$PASSWD1/" /usr/share/dcc/map.txt > /etc/dcc/map.txt
+		chmod 0600 /etc/dcc/map.txt
+		chown dcc:dcc /etc/dcc/map.txt
 	fi
 
 	if dpkg --compare-versions "$2" lt "1.2.58-1"; then 
 		rm -f /var/lib/dcc/map
+	fi
+
+	if ! [ -f /var/lib/dcc/map ]; then
 		/usr/sbin/update-dccmaps
 	fi
-	
 
-	if [ -x /usr/bin/cdcc ]; then
-		chown dcc:dcc /usr/bin/cdcc
-		chmod 04755 /usr/bin/cdcc
-	fi
-	
-	if [ -x /usr/bin/dccsight ]; then
-		chown dcc:dcc /usr/bin/dccsight
-		chmod 04755 /usr/bin/dccsight
-	fi
-	
-	if [ -d /var/lib/dcc ]; then
-		chown dcc:dcc /var/lib/dcc
-	fi
-
-	if ! [ -d /var/run/dcc ]; then
-		mkdir -p /var/run/dcc
-	fi
-
-	if [ -d /var/run/dcc ]; then
-		chown dcc:dcc /var/run/dcc
+	if [ `stat -c%U /var/lib/dcc/map` != "dcc" ] || [ `stat -c%G /var/lib/dcc/map` != "dcc" ]; then
+		chmod 0600 /var/lib/dcc/map
+		chown dcc:dcc /var/lib/dcc/map
 	fi
     ;;
 
@@ -105,8 +106,8 @@ case "$1" in
     ;;
 
     *)
-        echo "postinst called with unknown argument \`$1'" >&2
-        exit 1
+	echo "postinst called with unknown argument \`$1'" >&2
+	exit 1
     ;;
 esac
 
@@ -116,5 +117,3 @@ esac
 #DEBHELPER#
 
 exit 0
-
-

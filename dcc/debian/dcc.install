@@ -1,0 +1,10 @@
+debian/update-dccmaps usr/sbin
+homedir/flod etc/dcc
+homedir/grey_flod etc/dcc
+homedir/grey_whitelist etc/dcc
+homedir/ids usr/share/dcc
+homedir/map.txt usr/share/dcc
+homedir/whiteclnt etc/dcc
+homedir/whitecommon etc/dcc
+homedir/whitelist etc/dcc
+misc/*.m4 usr/share/dcc

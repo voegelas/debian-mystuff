@@ -1,37 +1,41 @@
 #!/usr/bin/make -f
-# Copyright Dan Weber <dan@mirrorlynx.com> GPL 2004
-# modified by Martin Zobel-Helas <mhelas@helas.net> 2004
 
-include /usr/share/cdbs/1/rules/simple-patchsys.mk
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/autotools.mk
+PRGNAM = dcc
+VERSION ?= $(shell dpkg-parsechangelog --show-field Version | cut -d - -f 1)
+DOWNLOAD ?= https://www.dcc-servers.net/src/dcc/old/dcc-$(VERSION).tar.Z
 
-export DH_VERBOSE=1
+%:
+	dh $@ --with systemd
 
-clean::
-	find . -iname \*.in | sed -e "s/\.in$$//" | xargs rm -f
+override_dh_auto_configure:
+	env \
+		FETCH_CMD=/usr/bin/wget \
+		HTPASSWD=/usr/bin/htpasswd \
+		NOTIFYMAILER=/usr/sbin/sendmail \
+		PERL=/usr/bin/perl \
+		RRDTOOL=/usr/bin/rrdtool \
+	./configure \
+		--bindir=/usr/bin \
+		--libexecdir=/usr/lib/dcc \
+		--mandir=/usr/share/man \
+		--homedir=/var/lib/dcc \
+		--with-cgi-bin=/usr/lib/cgi-bin/dcc \
+		--with-rundir=/run/dcc \
+		--disable-sys-inst \
+		--with-installroot=$(PWD)/debian/dcc \
+		--with-uid=dcc
 
-DEB_CONFIGURE_NORMAL_ARGS :=  --libexecdir=/usr/lib/dcc
+override_dh_install:
+	dh_install
+	mv debian/dcc/var/lib/dcc/dcc_conf debian/dcc/etc/dcc/dcc_conf
+	sed -i 's/^\(DCCIFD_ENABLE\)=off/\1=on/' debian/dcc/etc/dcc/dcc_conf
 
-DEB_CONFIGURE_EXTRA_FLAGS := --mandir=/usr/share/man \
-             --with-rundir=/var/run/dcc \
-             --homedir=/var/lib/dcc \
-             --with-uid=dcc
+override_dh_systemd_enable:
+	dh_systemd_enable --name=dccifd dccifd.service
 
-DEB_MAKE_CLEAN_TARGET := clean
-
-DEB_MAKE_INSTALL_TARGET := 
-
-binary-post-install/dcc-client::
-	rm -rf debian/dcc-client/usr/share/doc/dcc-client/ 
-	dh_link -pdcc-client usr/share/doc/dcc-common usr/share/doc/dcc-client
-
-binary-post-install/dcc-server::
-	rm -rf debian/dcc-server/usr/share/doc/dcc-server/ 
-	dh_link -pdcc-server usr/share/doc/dcc-common usr/share/doc/dcc-server
-
-binary-post-install/dcc-milter::
-	mv debian/dcc-milter/usr/bin/dccm debian/dcc-milter/usr/bin/dcc-milter
-	mv debian/dcc-milter/usr/share/man/man8/dccm.8 debian/dcc-milter/usr/share/man/man8/dcc-milter.8
-	rm -rf debian/dcc-milter/usr/share/doc/dcc-milter/ 
-	dh_link -pdcc-milter usr/share/doc/dcc-common usr/share/doc/dcc-milter
+get-orig-source:
+	curl -L $(DOWNLOAD) | tar --strip-components=1 -xzf -
+	cd .. && tar --exclude=debian -chzf $(PRGNAM)_$(VERSION).orig.tar.gz $(PRGNAM)-$(VERSION)
+	sed -i "s/@DCCSUID@/$(id -u)/" homedir/fix-map.in homedir/make-dcc_conf.in
+	sed -i '/^u_char grey_on;/d' srvrlib/db.c
+	sed -i 's/^\(const char \*userdirs;\)/extern \1/' thrlib/cmn_defs.h

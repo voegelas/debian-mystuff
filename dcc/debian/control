@@ -1,72 +1,31 @@
 Source: dcc
-Section: mail
+Section: non-free/mail
 Priority: extra
-Maintainer: Debian QA Group <packages@qa.debian.org>
-Build-Depends: debhelper (>= 4.1.0), libmilter-dev, cdbs
+Maintainer: Andreas Voegele <andreas@andreasvoegele.com>
+Build-Depends: debhelper (>= 9), libmilter-dev
 Standards-Version: 3.7.2
 
-Package: dcc-client
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, dcc-common (= ${Source-Version})
-Description: Distributed Checksum Clearinghouse - client programs
- This is the DCC client that send checksums to the DCC servers.
- .
- The DCC or Distributed Checksum Clearinghouse is a system of thousands of
- clients and more than 175 servers collecting and counting checksums related
- to several tens of million mail messages per day. The counts can be used by
- SMTP servers and mail user agents to detect and reject or filter spam or
- unsolicited bulk mail. DCC servers exchange or "flood" common checksums.
- The checksums include values that are constant across common variations in
- bulk messages, including "personalizations."
- .
-  Homepage: http://www.dcc-servers.net/dcc/
-
-Package: dcc-common
+Package: dcc
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, adduser
-Recommends: dcc-client | dcc-server | dcc-milter
-Description: Distributed Checksum Clearinghouse - common files
- This package contains the common files used by all packages.
- .
+Suggests: spamassassin
+Conflicts:
+ dcc-client,
+ dcc-common,
+ dcc-milter,
+ dcc-server,
+Provides:
+ dcc-client,
+ dcc-common,
+ dcc-milter,
+ dcc-server,
+Description: Distributed Checksum Clearinghouse
  The DCC or Distributed Checksum Clearinghouse is a system of thousands of
- clients and more than 175 servers collecting and counting checksums related
- to several tens of million mail messages per day. The counts can be used by
- SMTP servers and mail user agents to detect and reject or filter spam or
- unsolicited bulk mail. DCC servers exchange or "flood" common checksums.
- The checksums include values that are constant across common variations in
- bulk messages, including "personalizations."
+ clients and many servers collecting and counting checksums related to several
+ tens of million mail messages per day. The counts can be used by SMTP servers
+ and mail user agents to detect and reject or filter spam or unsolicited bulk
+ mail. DCC servers exchange or "flood" common checksums. The checksums include
+ values that are constant across common variations in bulk messages, including
+ "personalizations."
  .
-  Homepage: http://www.dcc-servers.net/dcc/
-
-Package: dcc-milter
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, sendmail, dcc-common (= ${Source-Version})
-Conflicts: spamass-milter
-Description: Distributed Checksum Clearinghouse - sendmail milter plugin
- This package contains dccm, a DCC plugin for sendmail.
- .
- The DCC or Distributed Checksum Clearinghouse is a system of thousands of
- clients and more than 175 servers collecting and counting checksums related
- to several tens of million mail messages per day. The counts can be used by
- SMTP servers and mail user agents to detect and reject or filter spam or
- unsolicited bulk mail. DCC servers exchange or "flood" common checksums.
- The checksums include values that are constant across common variations in
- bulk messages, including "personalizations."
- .
-  Homepage: http://www.dcc-servers.net/dcc/
-
-Package: dcc-server
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, dcc-common (= ${Source-Version})
-Description: Distributed Checksum Clearinghouse - server programs
- This is the DCC server that counts the checksums
- .
- The DCC or Distributed Checksum Clearinghouse is a system of thousands of
- clients and more than 175 servers collecting and counting checksums related
- to several tens of million mail messages per day. The counts can be used by
- SMTP servers and mail user agents to detect and reject or filter spam or
- unsolicited bulk mail. DCC servers exchange or "flood" common checksums.
- The checksums include values that are constant across common variations in
- bulk messages, including "personalizations."
- .
-  Homepage: http://www.dcc-servers.net/dcc/
+  Homepage: https://www.dcc-servers.net/dcc/
