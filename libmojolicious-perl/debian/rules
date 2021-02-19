@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+
+PRGNAM = libmojolicious-perl
+VERSION ?= $(shell dpkg-parsechangelog --show-field Version | cut -d - -f 1)
+MIRROR ?= http://ftp-stud.hs-esslingen.de/pub/Mirrors/CPAN
+DOWNLOAD ?= $(MIRROR)/authors/id/S/SR/SRI/Mojolicious-$(VERSION).tar.gz
+
+%:
+	dh $@
+
+get-orig-source:
+	curl -L $(DOWNLOAD) | tar --strip-components=1 -xzf -
+	cd .. && tar --exclude=debian -chzf $(PRGNAM)_$(VERSION).orig.tar.gz $(PRGNAM)-$(VERSION)

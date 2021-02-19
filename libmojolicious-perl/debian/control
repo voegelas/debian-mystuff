@@ -1,0 +1,23 @@
+Source: libmojolicious-perl
+Section: perl
+Priority: optional
+Maintainer: Andreas Voegele <andreas@andreasvoegele.com>
+Build-Depends: debhelper (>= 9.20120312)
+Build-Depends-Indep: perl, perl-base (>= 5.20) | libio-socket-ip-perl
+Standards-Version: 3.9.5
+Homepage: https://metacpan.org/release/Mojolicious
+
+Package: libmojolicious-perl
+Architecture: all
+Depends: ${misc:Depends}, ${perl:Depends}
+Suggests: libcpanel-json-xs-perl (>= 4.09), libev-perl (>= 4.32), libfuture-asyncawait-perl (>= 0.36), librole-tiny-perl, libio-socket-socks-perl, libio-socket-ssl-perl
+Description: Real-time web framework
+ An amazing real-time web framework built on top of the powerful Mojo web
+ development toolkit. With support for RESTful routes, plugins, commands,
+ Perl-ish templates, content negotiation, session management, form validation,
+ testing framework, static file server, CGI/PSGI detection, first class
+ Unicode support and much more for you to discover.
+ .
+ Take a look at our excellent documentation in Mojolicious::Guides!
+ .
+ This description was automagically extracted from the module by dh-make-perl.
