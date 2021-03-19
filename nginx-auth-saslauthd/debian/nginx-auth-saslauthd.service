@@ -1,6 +1,7 @@
 [Unit]
 Description=Basic authentication with saslauthd
 After=network.target
+Before=nginx.service
 
 [Service]
 Type=simple
@@ -10,6 +11,33 @@ RuntimeDirectory=nginx-auth
 RuntimeDirectoryMode=0770
 UMask=0007
 ExecStart=/usr/sbin/nginx-auth-saslauthd daemon -m production -l http+unix://%%2Frun%%2Fnginx-auth%%2Fhttp.sock
+CapabilityBoundingSet=
+DevicePolicy=closed
+IPAddressDeny=any
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateNetwork=yes
+PrivateTmp=yes
+PrivateDevices=yes
+PrivateUsers=yes
+ProtectHostname=yes
+ProtectClock=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_UNIX
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+RemoveIPC=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged
+SystemCallFilter=~@resources
 
 [Install]
 WantedBy=multi-user.target
