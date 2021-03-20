@@ -1,3 +1,10 @@
+nginx-auth-saslauthd (1.001-5) unstable; urgency=low
+
+  * Rename the socket to /run/nginx-auth/saslauthd.sock.
+  * Add SupplementaryGroups setting.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Sat, 20 Mar 2021 19:48:00 +0100
+
 nginx-auth-saslauthd (1.001-4) unstable; urgency=low
 
   * Add systemd security settings.

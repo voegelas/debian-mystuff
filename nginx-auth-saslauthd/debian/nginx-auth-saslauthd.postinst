@@ -3,7 +3,7 @@
 set -e
 
 if ! getent passwd | grep -q nginx-auth; then
-    useradd -r -M -d /nonexistent -s /usr/sbin/nologin -G sasl -U nginx-auth
+    useradd -r -M -d /nonexistent -s /usr/sbin/nologin -U nginx-auth
 fi
 
 #DEBHELPER#
