@@ -2,7 +2,7 @@
 
 PRGNAM = nginx-auth-saslauthd
 VERSION ?= $(shell dpkg-parsechangelog --show-field Version | cut -d - -f 1)
-DOWNLOAD ?= https://gitlab.com/voegelas/$(PRGNAM)/-/archive/v$(VERSION)/$(PRGNAM)-v$(VERSION).tar.gz
+DOWNLOAD ?= https://gitlab.com/voegelas/$(PRGNAM)/-/archive/$(VERSION)/$(PRGNAM)-$(VERSION).tar.gz
 
 %:
 	dh $@ --with systemd

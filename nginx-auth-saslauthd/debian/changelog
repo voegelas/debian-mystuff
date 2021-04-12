@@ -1,3 +1,9 @@
+nginx-auth-saslauthd (1.002-1) unstable; urgency=low
+
+  * Update documentation and examples.
+
+ -- Andreas Voegele <andreas@andreasvoegele.com>  Mon, 12 Apr 2021 18:35:01 +0200
+
 nginx-auth-saslauthd (1.001-5) unstable; urgency=low
 
   * Rename the socket to /run/nginx-auth/saslauthd.sock.
